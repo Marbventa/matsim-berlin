@@ -145,7 +145,7 @@ public class RunBerlinDrtScenario {
 			overridingConfigFileName = null;
 			
 			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin-shp/berlin.shp";
-			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin_bb_area/service-area.shp";
+			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
 
 			transitStopCoordinatesSFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_S-zoneC.csv";
 			transitStopCoordinatesRBFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_RB-zoneC.csv";
