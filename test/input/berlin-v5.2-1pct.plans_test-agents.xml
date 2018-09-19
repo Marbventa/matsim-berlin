@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE population SYSTEM "http://www.matsim.org/files/dtd/population_v6.dtd">
+
+<population>
+
+
+
+<!-- ====================================================================== -->
+
+
+	<person id="100010701">
+                <plan score="87.69588041495416" selected="yes">
+                        <activity type="home_46200.0" link="10723" x="4632239.860061693" y="5826584.427915721" end_time="06:56:10" >
+                                <attributes>
+                                        <attribute name="zoneId" class="java.lang.String" >12064472</attribute>
+                                </attributes>
+                        </activity>
+                        <leg mode="walk">
+                                <route type="generic" start_link="10723" end_link="10723" trav_time="00:16:48" distance="1120.7600530888926"></route>
+                        </leg>
+                        <activity type="leisure_2400.0" link="10723" x="4631524.841132437" y="5826801.259587159" max_dur="01:02:05" >
+                                <attributes>
+                                        <attribute name="cemdapStopDuration_s" class="java.lang.Integer" >2340</attribute>
+                                        <attribute name="zoneId" class="java.lang.String" >12064472</attribute>
+                                </attributes>
+                        </activity>
+                        <leg mode="access_walk">
+                                <route type="generic" start_link="10723" end_link="10723" trav_time="00:23:01" distance="2763.424921008634"></route>
+                        </leg>
+                        <activity type="car interaction" link="10723" x="4633422.149064934" y="5827759.837646425" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="car">
+                                <route type="links" start_link="10723" end_link="123160" trav_time="01:03:49" distance="55629.36699272552" vehicleRefId="100010701">10723 10719 24781 27173 10717 10715 10713 10711 47955 85818 2394 2396 2480 16251 71895 12958 12982 12965 21147 71885 34589 27830 61684 93766 138358 138364 30176 55440 138359 76233 76262 130192 57418 57378 57407 34779 57029 57404 57410 4244 54445 90792 90789 4240 54441 36391 36393 105414 105417 36375 81591 36383 36379 36380 130217 36369 29204 50930 130200 36371 50921 75691 124569 44496 44590 56424 44578 44499 2410 2412 2420 2407 56459 56420 44487 121462 56415 56428 9641 11900 11911 121469 26153 123160</route>
+                        </leg>
+                        <activity type="car interaction" link="123160" x="4672232.820896338" y="5804186.049182902" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="egress_walk">
+                                <route type="generic" start_link="123160" end_link="123160" trav_time="00:02:46" distance="332.50512540305425"></route>
+                        </leg>
+                        <activity type="work_28200.0" link="123160" x="4671986.318349932" y="5804254.287081757" end_time="16:21:18" >
+                                <attributes>
+                                        <attribute name="cemdapStopDuration_s" class="java.lang.Integer" >28020</attribute>
+                                        <attribute name="zoneId" class="java.lang.String" >12053000</attribute>
+                                </attributes>
+                        </activity>
+                        <leg mode="access_walk">
+                                <route type="generic" start_link="123160" end_link="123160" trav_time="00:02:46" distance="332.50512540305425"></route>
+                        </leg>
+                        <activity type="car interaction" link="123160" x="4672232.820896338" y="5804186.049182902" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="car">
+                                <route type="links" start_link="123160" end_link="130181" trav_time="00:15:17" distance="13219.912287795654" vehicleRefId="100010701">123160 123017 28537 89822 72033 27301 36699 148656 11912 11901 9642 56429 56416 44583 2406 2419 2411 2409 44498 44577 56423 44591 44497 124570 75692 50922 36372 130182 130181</route>
+                        </leg>
+                        <activity type="car interaction" link="130181" x="4663135.874170158" y="5809782.050913191" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="egress_walk">
+                                <route type="generic" start_link="130181" end_link="130181" trav_time="00:02:50" distance="341.79275859388395"></route>
+                        </leg>
+                        <activity type="leisure_600.0" link="130181" x="4663146.4448647825" y="5809519.345991849" max_dur="00:00:00" >
+                                <attributes>
+                                        <attribute name="cemdapStopDuration_s" class="java.lang.Integer" >660</attribute>
+                                        <attribute name="zoneId" class="java.lang.String" >12064480</attribute>
+                                </attributes>
+                        </activity>
+                        <leg mode="access_walk">
+                                <route type="generic" start_link="130181" end_link="130181" trav_time="00:02:50" distance="341.79275859388395"></route>
+                        </leg>
+                        <activity type="car interaction" link="130181" x="4663135.874170158" y="5809782.050913191" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="car">
+                                <route type="links" start_link="130181" end_link="139117" trav_time="00:14:42" distance="16035.993163552426" vehicleRefId="100010701">130181 122224 124855 65667 134050 106370 106366 39645 134103 69365 69351 69387 69417 139204 34608 139202 69361 69349 139093 139122 139120 139118 139117</route>
+                        </leg>
+                        <activity type="car interaction" link="139117" x="4663699.727528663" y="5820945.502189023" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="egress_walk">
+                                <route type="generic" start_link="139117" end_link="139117" trav_time="00:02:05" distance="251.71917491341048"></route>
+                        </leg>
+                        <activity type="shopping_2400.0" link="139117" x="4663733.341180087" y="5821136.192386578" max_dur="00:26:23" >
+                                <attributes>
+                                        <attribute name="cemdapStopDuration_s" class="java.lang.Integer" >2340</attribute>
+                                        <attribute name="zoneId" class="java.lang.String" >12064290</attribute>
+                                </attributes>
+                        </activity>
+                        <leg mode="bicycle">
+                                <route type="generic" start_link="139117" end_link="10723" trav_time="00:23:45" distance="1234.567"></route>
+                        </leg>
+                        <activity type="home_46200.0" link="10723" x="4632239.860061693" y="5826584.427915721" >
+                                <attributes>
+                                        <attribute name="cemdapStopDuration_s" class="java.lang.Integer" >34920</attribute>
+                                        <attribute name="zoneId" class="java.lang.String" >12064472</attribute>
+                                </attributes>
+                        </activity>
+                </plan>
+
+        </person>
+
+<!-- ====================================================================== -->
+
+	<person id="100033101">
+                <plan score="89.52924933782327" selected="yes">
+                        <activity type="home_53400.0" link="21031" x="4628371.54087594" y="5829845.374484305" end_time="07:48:00" >
+                                <attributes>
+                                        <attribute name="zoneId" class="java.lang.String" >12064472</attribute>
+                                </attributes>
+                        </activity>
+                        <leg mode="access_walk">
+                                <route type="generic" start_link="21031" end_link="21031" trav_time="00:08:14" distance="988.6195855815384"></route>
+                        </leg>
+                        <activity type="car interaction" link="21031" x="4627722.271320846" y="5829449.427883731" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="car">
+                                <route type="links" start_link="21031" end_link="6143" trav_time="01:08:31" distance="37248.54195936564" vehicleRefId="100033101">21031 120680 105460 105490 41621 26688 79151 79155 105719 20964 85694 71145 71099 71142 653 59689 121588 76770 12478 75008 75011 75012 75009 12938 62232 69343 12926 12936 62433 155519 58634 104746 24400 63643 154755 105758 58875 54580 64388 53405 3979 66958 149400 54564 43470 72339 137705 137682 70761 94692 94694 95017 149805 151542 151552 12554 43336 115900 12430 84816 84828 98147 76362 53044 94117 44605 94282 44655 55801 44622 142213 103858 47330 47332 44634 49596 44728 44729 44727 113487 113480 44726 71557 115886 71558 91519 19785 137590 91518 153173 33907 137689 137613 73903 133466 57011 69280 54074 54075 54076 137606 44598 91523 44606 44607 19969 101805 56971 63690 51197 137600 149526 142212 27378 140994 56751 56798 56747 149525 56726 56729 89691 101255 101267 29898 64856 119878 56703 56704 56705 95861 101252 123801 139664 108959 108960 123798 142020 49502 142021 140960 6355 126423 141712 101177 8891 8892 39934 116309 108971 144500 45714 144498 144499 3619 57566 7994 102972 1977 35580 29916 29912 29913 65169 22181 22182 65161 106825 106824 3487 5679 22047 101520 101518 101516 80727 51924 41083 57254 51917 141001 141010 125451 125453 159534 141003 95469 9397 159549 65275 65276 5940 120499 53820 36161 36162 71838 106322 55846 130115 54683 24868 24866 54221 6144 6143</route>
+                        </leg>
+                        <activity type="car interaction" link="6143" x="4598354.3182454845" y="5818005.704224854" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="egress_walk">
+                                <route type="generic" start_link="6143" end_link="6143" trav_time="00:01:09" distance="139.95590066176803"></route>
+                        </leg>
+                        <activity type="work_8400.0" link="6143" x="4598341.775405367" y="5818112.629455971" end_time="11:27:00" >
+                                <attributes>
+                                        <attribute name="cemdapStopDuration_s" class="java.lang.Integer" >8160</attribute>
+                                        <attribute name="zoneId" class="java.lang.String" >908010302</attribute>
+                                </attributes>
+                        </activity>
+                        <leg mode="access_walk">
+                                <route type="generic" start_link="6143" end_link="6143" trav_time="00:01:09" distance="139.95590066176803"></route>
+                        </leg>
+                        <activity type="car interaction" link="6143" x="4598354.3182454845" y="5818005.704224854" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="car">
+                                <route type="links" start_link="6143" end_link="29519" trav_time="00:04:52" distance="1337.0741564255698" vehicleRefId="100033101">6143 18951 18949 18947 18955 95189 95187 95185 95183 95181 95179 24812 24871 48102 110016 29520 29519</route>
+                        </leg>
+                        <activity type="car interaction" link="29519" x="4597659.07710882" y="5817329.08104944" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="egress_walk">
+                                <route type="generic" start_link="29519" end_link="29519" trav_time="00:01:24" distance="169.49960021154843"></route>
+                        </leg>
+                        <activity type="shopping_1200.0" link="29519" x="4597541.18094655" y="5817273.398353233" max_dur="00:21:00" >
+                                <attributes>
+                                        <attribute name="cemdapStopDuration_s" class="java.lang.Integer" >1260</attribute>
+                                        <attribute name="zoneId" class="java.lang.String" >908010211</attribute>
+                                </attributes>
+                        </activity>
+                       <leg mode="bicycle">
+                                <route type="generic" start_link="29519" end_link="78908" trav_time="00:12:34" distance="1234.567"></route>
+                        </leg>
+                        <activity type="shopping_1200.0" link="78908" x="4602895.99875793" y="5808954.951496554" max_dur="00:24:00" >
+                                <attributes>
+                                        <attribute name="cemdapStopDuration_s" class="java.lang.Integer" >1440</attribute>
+                                        <attribute name="zoneId" class="java.lang.String" >908041039</attribute>
+                                </attributes>
+                        </activity>
+                        <leg mode="bicycle">
+                                <route type="generic" start_link="78908" end_link="21031" trav_time="00:23:45" distance="1234.567"></route>
+                        </leg>
+                        <activity type="home_53400.0" link="21031" x="4628371.54087594" y="5829845.374484305" >
+                                <attributes>
+                                        <attribute name="cemdapStopDuration_s" class="java.lang.Integer" >25440</attribute>
+                                        <attribute name="zoneId" class="java.lang.String" >12064472</attribute>
+                                </attributes>
+                        </activity>
+                </plan>
+
+        </person>
+
+<!-- ====================================================================== -->
+
+	<person id="53874901">
+                <plan score="123.69718923798823" selected="yes">
+                        <activity type="home_91800.0" link="148766" x="4612067.1701425975" y="5793959.351099634" end_time="00:11:23" >
+                                <attributes>
+                                        <attribute name="zoneId" class="java.lang.String" >12061260</attribute>
+                                </attributes>
+                        </activity>
+                        <leg mode="access_walk">
+                                <route type="generic" start_link="148766" end_link="148766" trav_time="00:07:48" distance="936.7639574931728"></route>
+                        </leg>
+                        <activity type="car interaction" link="148766" x="4611628.961447073" y="5793387.319881649" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="car">
+                                <route type="links" start_link="148766" end_link="99494" trav_time="00:35:36" distance="16473.03159983262" vehicleRefId="53874901">148766 148767 148777 148775 148763 148760 18824 145802 74654 94074 34859 30830 154475 143682 143684 143648 114544 6002 41600 148620 7627 76301 87012 87039 7036 110999 21712 21710 35637 110616 87007 139695 21714 139697 20026 20022 144777 124944 52050 7034 90947 25273 24835 24833 24831 123520 92781 92779 92777 89091 89089 83034 79 89 13691 83025 139972 92773 139726 139724 139722 139720 139718 5967 5969 5971 5973 5975 4432 93275 93277 4406 15526 69256 28523 30487 16318 28541 8522 8524 8526 50880 117181 99462 99460 99494</route>
+                        </leg>
+                        <activity type="car interaction" link="99494" x="4611630.561791112" y="5807335.837179961" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="egress_walk">
+                                <route type="generic" start_link="99494" end_link="99494" trav_time="00:01:42" distance="205.66587700018206"></route>
+                        </leg>
+                        <activity type="leisure_2400.0" link="99494" x="4611723.51962273" y="5807463.850897713" max_dur="00:39:40" >
+                                <attributes>
+                                        <attribute name="cemdapStopDuration_s" class="java.lang.Integer" >2160</attribute>
+                                        <attribute name="zoneId" class="java.lang.String" >909031201</attribute>
+                                </attributes>
+                        </activity>
+                        <leg mode="access_walk">
+                                <route type="generic" start_link="99494" end_link="99494" trav_time="00:01:42" distance="205.66587700018206"></route>
+                        </leg>
+                        <activity type="car interaction" link="99494" x="4611630.561791112" y="5807335.837179961" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="car">
+                                <route type="links" start_link="99494" end_link="148766" trav_time="00:33:36" distance="15851.768195558172" vehicleRefId="53874901">99494 99422 99424 8527 8525 8523 27511 75453 17830 111104 99465 4407 15525 4405 93278 93276 4433 5976 5974 5972 5970 5968 139717 139719 139721 139723 139725 92772 139971 83024 13692 90 80 83035 89088 89090 92776 92778 92780 123519 24830 24832 24834 25272 90946 7033 52049 124943 144776 20023 20021 20027 139698 21715 139696 87008 110617 35636 21709 21711 111000 35619 7035 87038 87011 76302 7628 148621 41601 6001 114543 143647 143683 143681 154474 30829 34858 94073 74653 145803 145800 145801 18823 148759 148762 148774 148776 148766</route>
+                        </leg>
+                        <activity type="car interaction" link="148766" x="4611628.961447073" y="5793387.319881649" max_dur="00:00:00" >
+                        </activity>
+                        <leg mode="egress_walk">
+                                <route type="generic" start_link="148766" end_link="148766" trav_time="00:07:48" distance="936.7639574931728"></route>
+                        </leg>
+                        <activity type="home_91800.0" link="148766" x="4612067.1701425975" y="5793959.351099634" >
+                                <attributes>
+                                        <attribute name="cemdapStopDuration_s" class="java.lang.Integer" >66780</attribute>
+                                        <attribute name="zoneId" class="java.lang.String" >12061260</attribute>
+                                </attributes>
+                        </activity>
+                </plan>
+
+        </person>
+
+</population>
