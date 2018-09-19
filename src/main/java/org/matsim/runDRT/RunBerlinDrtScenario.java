@@ -368,16 +368,14 @@ public class RunBerlinDrtScenario {
 						directTripPlan.addActivity(trip.getDestinationActivity());
 
 						splitTripPlanPT1.addLeg(factory.createLeg(berlinTripmode));
-						Activity prActivity1 = factory.createActivityFromCoord(parkAndRideActivity,
-								getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesS));
+						Activity prActivity1 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesS));
 						prActivity1.setMaximumDuration(parkAndRideDuration);
 						splitTripPlanPT1.addActivity(prActivity1);
 						splitTripPlanPT1.addLeg(factory.createLeg(brandenburgTripmode));
 						splitTripPlanPT1.addActivity(trip.getDestinationActivity());
 
 						splitTripPlanPT2.addLeg(factory.createLeg(berlinTripmode));
-						Activity prActivity2 = factory.createActivityFromCoord(parkAndRideActivity,
-								getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesRB));
+						Activity prActivity2 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesRB));
 						prActivity2.setMaximumDuration(parkAndRideDuration);
 						splitTripPlanPT2.addActivity(prActivity2);
 						splitTripPlanPT2.addLeg(factory.createLeg(brandenburgTripmode));
@@ -416,16 +414,14 @@ public class RunBerlinDrtScenario {
 						directTripPlan.addActivity(trip.getDestinationActivity());
 
 						splitTripPlanPT1.addLeg(factory.createLeg(brandenburgTripmode));
-						Activity prActivity1 = factory.createActivityFromCoord(parkAndRideActivity,
-								getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesS));
+						Activity prActivity1 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesS));
 						prActivity1.setMaximumDuration(parkAndRideDuration);
 						splitTripPlanPT1.addActivity(prActivity1);
 						splitTripPlanPT1.addLeg(factory.createLeg(berlinTripmode));
 						splitTripPlanPT1.addActivity(trip.getDestinationActivity());
 
 						splitTripPlanPT2.addLeg(factory.createLeg(brandenburgTripmode));
-						Activity prActivity2 = factory.createActivityFromCoord(parkAndRideActivity,
-								getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesRB));
+						Activity prActivity2 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesRB));
 						prActivity2.setMaximumDuration(parkAndRideDuration);
 						splitTripPlanPT2.addActivity(prActivity2);
 						splitTripPlanPT2.addLeg(factory.createLeg(berlinTripmode));
