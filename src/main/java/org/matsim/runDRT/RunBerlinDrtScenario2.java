@@ -90,7 +90,7 @@ public class RunBerlinDrtScenario2 {
 			overridingConfigFileName = null;
 			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin-shp/berlin.shp";
 			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
-			dailyRewardDrtInsteadOfPrivateCar = 1000.;
+			dailyRewardDrtInsteadOfPrivateCar = 0.;
 		}		
 		
 		new RunBerlinDrtScenario2( configFileName, overridingConfigFileName, berlinShapeFile, drtServiceAreaShapeFile, dailyRewardDrtInsteadOfPrivateCar).run() ;
