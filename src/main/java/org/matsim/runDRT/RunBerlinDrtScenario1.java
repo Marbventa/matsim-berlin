@@ -168,7 +168,7 @@ public class RunBerlinDrtScenario1 {
 				modeToReplaceCarTripsInBrandenburg,
 				drtServiceAreaAttribute).run(this.scenario);
 		
-		new BerlinPlansModification(transitStopCoordinatesSFile,
+		new BerlinPlansModificationSplitTrips(transitStopCoordinatesSFile,
 				transitStopCoordinatesRBFile,
 				shpUtils,
 				inputPersonAttributesSubpopulationPerson,

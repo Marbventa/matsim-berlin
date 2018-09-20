@@ -93,7 +93,7 @@ public class RunBerlinDrtScenarioTest {
 			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin-shp/berlin.shp";
 			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
 			
-			RunBerlinDrtScenario2 berlin = new RunBerlinDrtScenario2(configFileName, overridingConfigFileName, berlinShapeFile, drtServiceAreaShapeFile);
+			RunBerlinDrtScenario2 berlin = new RunBerlinDrtScenario2(configFileName, overridingConfigFileName, berlinShapeFile, drtServiceAreaShapeFile, 5.);
 			
 			Config config =  berlin.prepareConfig() ;
 			config.plans().setInputFile("../../../test/input/berlin-v5.2-1pct.plans_test-agents.xml");

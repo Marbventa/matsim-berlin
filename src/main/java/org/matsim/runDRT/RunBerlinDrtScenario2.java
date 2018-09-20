@@ -72,12 +72,15 @@ public class RunBerlinDrtScenario2 {
 	private boolean hasPreparedScenario = false ;
 	private boolean hasPreparedControler = false ;
 
+	private double dailyRewardDrtInsteadOfPrivateCar;
+
 	public static void main(String[] args) {
 		
 		String configFileName ;
 		String overridingConfigFileName;
 		String berlinShapeFile;
 		String drtServiceAreaShapeFile;
+		double dailyRewardDrtInsteadOfPrivateCar;
 		
 		if (args.length > 0) {
 			throw new RuntimeException();
@@ -87,16 +90,17 @@ public class RunBerlinDrtScenario2 {
 			overridingConfigFileName = null;
 			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin-shp/berlin.shp";
 			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
+			dailyRewardDrtInsteadOfPrivateCar = 1000.;
 		}		
 		
-		new RunBerlinDrtScenario2( configFileName, overridingConfigFileName, berlinShapeFile, drtServiceAreaShapeFile).run() ;
+		new RunBerlinDrtScenario2( configFileName, overridingConfigFileName, berlinShapeFile, drtServiceAreaShapeFile, dailyRewardDrtInsteadOfPrivateCar).run() ;
 	}
 	
-	public RunBerlinDrtScenario2( String configFileName, String overridingConfigFileName, String berlinShapeFile, String drtServiceAreaShapeFile) {
+	public RunBerlinDrtScenario2( String configFileName, String overridingConfigFileName, String berlinShapeFile, String drtServiceAreaShapeFile, double dailyRewardDrtInsteadOfPrivateCar) {
 		
 		this.berlinShapeFile = berlinShapeFile;
 		this.drtServiceAreaShapeFile = drtServiceAreaShapeFile;
-				
+		this.dailyRewardDrtInsteadOfPrivateCar = dailyRewardDrtInsteadOfPrivateCar;
 		this.berlin = new RunBerlinScenario( configFileName, overridingConfigFileName );
 	}
 
@@ -122,7 +126,19 @@ public class RunBerlinDrtScenario2 {
 		controler.addOverridingModule(new AbstractModule() {
 			@Override
 			public void install() {
-				addEventHandlerBinding().to(TaxiFareHandler.class).asEagerSingleton();
+				this.addEventHandlerBinding().to(TaxiFareHandler.class).asEagerSingleton();
+			}
+		});
+		
+		// rewards for no longer owning a car
+		controler.addOverridingModule(new AbstractModule() {
+			@Override
+			public void install() {
+				
+				this.addEventHandlerBinding().toInstance(new DailyRewardHandlerDrtInsteadOfCar(dailyRewardDrtInsteadOfPrivateCar, modeToReplaceCarTripsInBrandenburg));
+				
+				this.bind(DRTPassengerTracker.class).asEagerSingleton();
+				this.addEventHandlerBinding().to(DRTPassengerTracker.class);
 			}
 		});
 		
@@ -144,6 +160,8 @@ public class RunBerlinDrtScenario2 {
 				this.taxiNetworkMode,
 				modeToReplaceCarTripsInBrandenburg,
 				drtServiceAreaAttribute).run(this.scenario);
+		
+		new BerlinPlansModificationTagFormerCarUsers().run(scenario);
 			
 		RouteFactories routeFactories = scenario.getPopulation().getFactory().getRouteFactories();
 		routeFactories.setRouteFactory(DrtRoute.class, new DrtRouteFactory());

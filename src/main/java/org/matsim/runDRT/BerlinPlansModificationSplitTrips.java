@@ -49,8 +49,8 @@ import org.matsim.core.utils.io.IOUtils;
 * @author ikaddoura
 */
 
-public class BerlinPlansModification {
-	private static final Logger log = Logger.getLogger(BerlinPlansModification.class);
+public class BerlinPlansModificationSplitTrips {
+	private static final Logger log = Logger.getLogger(BerlinPlansModificationSplitTrips.class);
 	
 	private final List<Coord> prCoordinatesS;
 	private final List<Coord> prCoordinatesRB;
@@ -68,7 +68,7 @@ public class BerlinPlansModification {
 	private final boolean splitTripsRB;
 	private final boolean splitTripsTaxi;
 
-	public BerlinPlansModification(
+	public BerlinPlansModificationSplitTrips(
 			String transitStopCoordinatesSFile,
 			String transitStopCoordinatesRBFile,
 			BerlinShpUtils shpUtils,
@@ -101,7 +101,6 @@ public class BerlinPlansModification {
 
 	public void run(Scenario scenario) {
 		log.info("Number of persons before adjusting plans: " + scenario.getPopulation().getPersons().size());
-		tagCarUsers(scenario);
 		splitTrips(scenario);
 		
 		// Delete all link information and (hopefully) do everything via the coordinates...
@@ -386,41 +385,6 @@ public class BerlinPlansModification {
 		}
 
 		return minDistanceCoord;
-	}
-	
-	private void tagCarUsers(Scenario scenario) {
-		int carUsers = 0;
-		int noCarUsers = 0;
-
-		log.info("Tagging car users...");
-
-		for (Person person : scenario.getPopulation().getPersons().values()) {
-			Plan selectedPlan = person.getSelectedPlan();
-			if (selectedPlan == null) {
-				throw new RuntimeException("No selected plan. Aborting...");
-			}
-
-			boolean personHasCarTrip = false;
-
-			for (PlanElement pE : selectedPlan.getPlanElements()) {
-
-				if (pE instanceof Leg) {
-					Leg leg = (Leg) pE;
-					if (leg.getMode().equals(TransportMode.car)) {
-						personHasCarTrip = true;
-					}
-				}
-			}
-			person.getAttributes().putAttribute("CarOwnerInBaseCase", personHasCarTrip);
-			if (personHasCarTrip) {
-				carUsers++;
-			} else {
-				noCarUsers++;
-			}
-		}
-		log.info("Tagging car users... Done.");
-		log.info("Number of car users: " + carUsers);
-		log.info("Number of non-car users: " + noCarUsers);
 	}
 	
 	private List<Coord> readCSVFile(String transitStopCoordinatesFile) {
