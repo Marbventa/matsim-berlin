@@ -25,7 +25,9 @@ import org.matsim.core.config.Config;
 import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
 import org.matsim.core.network.io.NetworkWriter;
 import org.matsim.core.population.io.PopulationWriter;
-import org.matsim.runDRT.RunBerlinDrtScenario;
+import org.matsim.runDRT.RunBerlinDrtScenario1;
+import org.matsim.runDRT.RunBerlinDrtScenario2;
+import org.matsim.runDRT.RunBerlinDrtScenario0;
 import org.matsim.testcases.MatsimTestUtils;
 
 /**
@@ -38,7 +40,7 @@ public class RunBerlinDrtScenarioTest {
 	
 
 	@Test
-	public final void testDrtBerlinWithScenarioAdjustment() {
+	public final void testDrtBerlinScenario1() {
 		try {
 			
 			String configFileName ;
@@ -47,9 +49,8 @@ public class RunBerlinDrtScenarioTest {
 			String drtServiceAreaShapeFile;
 			String transitStopCoordinatesSFile;
 			String transitStopCoordinatesRBFile;
-			boolean turnDefaultBerlinScenarioIntoDRTscenario;		
 			
-			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt-v5.2-1pct.config.xml";
+			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt1-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
 			
 			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin-shp/berlin.shp";
@@ -57,10 +58,8 @@ public class RunBerlinDrtScenarioTest {
 
 			transitStopCoordinatesSFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_S-zoneC.csv";
 			transitStopCoordinatesRBFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_RB-zoneC.csv";
-			
-			turnDefaultBerlinScenarioIntoDRTscenario = true;
-			
-			RunBerlinDrtScenario berlin = new RunBerlinDrtScenario(configFileName, overridingConfigFileName, turnDefaultBerlinScenarioIntoDRTscenario, berlinShapeFile, drtServiceAreaShapeFile, transitStopCoordinatesSFile, transitStopCoordinatesRBFile);
+						
+			RunBerlinDrtScenario1 berlin = new RunBerlinDrtScenario1(configFileName, overridingConfigFileName, berlinShapeFile, drtServiceAreaShapeFile, transitStopCoordinatesSFile, transitStopCoordinatesRBFile);
 			
 			Config config =  berlin.prepareConfig() ;
 			config.plans().setInputFile("../../../test/input/berlin-v5.2-1pct.plans_test-agents.xml");
@@ -80,30 +79,50 @@ public class RunBerlinDrtScenarioTest {
 	}
 	
 	@Test
-	public final void testDrtBerlinWithoutScenarioAdjustment() {
+	public final void testDrtBerlinScenario2() {
 		try {
 			
 			String configFileName ;
 			String overridingConfigFileName;
 			String berlinShapeFile;
 			String drtServiceAreaShapeFile;
-			String transitStopCoordinatesSFile;
-			String transitStopCoordinatesRBFile;
-			boolean turnDefaultBerlinScenarioIntoDRTscenario;		
 			
-			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt-v5.2-1pct.config.xml";
-			
+			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt2-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
 			
-			berlinShapeFile = null;
-			drtServiceAreaShapeFile = null;
-
-			transitStopCoordinatesSFile = null;
-			transitStopCoordinatesRBFile = null;
+			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin-shp/berlin.shp";
+			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
 			
-			turnDefaultBerlinScenarioIntoDRTscenario = false;
+			RunBerlinDrtScenario2 berlin = new RunBerlinDrtScenario2(configFileName, overridingConfigFileName, berlinShapeFile, drtServiceAreaShapeFile);
 			
-			RunBerlinDrtScenario berlin = new RunBerlinDrtScenario(configFileName, overridingConfigFileName, turnDefaultBerlinScenarioIntoDRTscenario, berlinShapeFile, drtServiceAreaShapeFile, transitStopCoordinatesSFile, transitStopCoordinatesRBFile);
+			Config config =  berlin.prepareConfig() ;
+			config.plans().setInputFile("../../../test/input/berlin-v5.2-1pct.plans_test-agents.xml");
+			config.controler().setLastIteration(5);
+			config.controler().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
+			config.controler().setOutputDirectory( utils.getOutputDirectory() + "run_output/" );
+			
+			Scenario scenario = berlin.prepareScenario();
+			new NetworkWriter(scenario.getNetwork()).write(utils.getOutputDirectory() + "drt-berlin-v5.0.network.xml.gz");
+			new PopulationWriter(scenario.getPopulation()).write(utils.getOutputDirectory() + "drt-berlin-v5.2-1pct.plans.xml.gz");	
+			
+			berlin.run() ;
+			
+		} catch ( Exception ee ) {
+			throw new RuntimeException(ee) ;
+		}
+	}
+	
+	@Test
+	public final void testDrtBerlinScenario0() {
+		try {
+			
+			String configFileName ;
+			String overridingConfigFileName;	
+			
+			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt1-v5.2-1pct.config.xml";
+			overridingConfigFileName = null;
+						
+			RunBerlinDrtScenario0 berlin = new RunBerlinDrtScenario0(configFileName, overridingConfigFileName);
 			
 			Config config =  berlin.prepareConfig() ;
 			config.plans().setInputFile("../../../test/input/drt-berlin-v5.2-1pct.plans_test-agents.xml");

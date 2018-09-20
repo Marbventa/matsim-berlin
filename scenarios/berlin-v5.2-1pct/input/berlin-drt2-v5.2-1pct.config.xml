@@ -10,8 +10,8 @@
 	<module name="controler">
 		<param name="lastIteration" value="100" />
 		<param name="overwriteFiles" value="deleteDirectoryIfExists" />
-		<param name="runId" value="berlin-drt-v5.2-1pct" />
-		<param name="outputDirectory" value="./scenarios/berlin-v5.2-1pct/output-berlin-drt-v5.2-1pct" />
+		<param name="runId" value="berlin-drt2-v5.2-1pct" />
+		<param name="outputDirectory" value="./scenarios/berlin-v5.2-1pct/output-berlin-drt2-v5.2-1pct" />
 		<param name="writeEventsInterval" value="1" />
 		<param name="writePlansInterval" value="1" />
 		<param name="firstIteration" value="0" />
@@ -37,7 +37,7 @@
 	</module>
 	
 	<module name="vehicles" >
-		<param name="vehiclesFile" value="../../berlin-v5.2-10pct/input/berlin-v5.0.mode-vehicle-types_car-car_bb-freight.xml" />
+		<param name="vehiclesFile" value="../../berlin-v5.2-10pct/input/berlin-v5.0.mode-vehicle-types.xml" />
 	</module>
 	
 	<module name="transit" >
@@ -51,7 +51,7 @@
 	</module>
 	
 	<module name="planscalcroute" >
-		<param name="networkModes" value="car,car_bb,freight,ride" />
+		<param name="networkModes" value="car,freight,ride" />
 		<parameterset type="teleportedModeParameters" >
 			<param name="beelineDistanceFactor" value="1.4" />
 			<param name="mode" value="bicycle" />
@@ -76,7 +76,7 @@
 		<param name="simStarttimeInterpretation" value="onlyUseStarttime" />
 		<param name="endTime" value="36:00:00" />
 		<param name="flowCapacityFactor" value="0.015" />
-		<param name="mainMode" value="car,car_bb,freight" />
+		<param name="mainMode" value="car,freight" />
 		<param name="numberOfThreads" value="1" />
 		<param name="startTime" value="00:00:00" />
 		<param name="storageCapacityFactor" value="0.015" />
@@ -126,8 +126,8 @@
 	</module>
 	
 	<module name="subtourModeChoice" >
-		<param name="chainBasedModes" value="car_bb,bicycle" />
-		<param name="modes" value="drt,car_bb,pt,bicycle,walk" />
+		<param name="chainBasedModes" value="car,bicycle" />
+		<param name="modes" value="drt,car,pt,bicycle,walk" />
 	</module>
 	
 	<module name="transitRouter" >
@@ -138,7 +138,7 @@
 	</module>
 	
 	<module name="travelTimeCalculator" >
-		<param name="analyzedModes" value="car,car_bb,freight" />
+		<param name="analyzedModes" value="car,freight" />
 		<param name="separateModes" value="true" />
 		<param name="calculateLinkToLinkTravelTimes" value="false" />
 		<param name="calculateLinkTravelTimes" value="true" />
@@ -228,13 +228,6 @@
 			
 			<parameterset type="modeParams" >
 				<param name="mode" value="car" />
-				<param name="constant" value="-1.5" />
-				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
-				<param name="monetaryDistanceRate" value="-0.0002" />
-			</parameterset>
-			
-			<parameterset type="modeParams" >
-				<param name="mode" value="car_bb" />
 				<param name="constant" value="-1.5" />
 				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
 				<param name="monetaryDistanceRate" value="-0.0002" />

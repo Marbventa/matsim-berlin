@@ -44,8 +44,8 @@ public class ServiceAreaRequestValidator implements DrtRequestValidator {
 		
 		invalidRequestCauses.addAll(this.delegate.validateDrtRequest(request));
 		
-		boolean fromLinkInServiceArea = (boolean) request.getFromLink().getAttributes().getAttribute(RunBerlinDrtScenario.drtServiceAreaAttribute);
-		boolean toLinkInServiceArea = (boolean) request.getToLink().getAttributes().getAttribute(RunBerlinDrtScenario.drtServiceAreaAttribute);
+		boolean fromLinkInServiceArea = (boolean) request.getFromLink().getAttributes().getAttribute(RunBerlinDrtScenario1.drtServiceAreaAttribute);
+		boolean toLinkInServiceArea = (boolean) request.getToLink().getAttributes().getAttribute(RunBerlinDrtScenario1.drtServiceAreaAttribute);
 
 		if (!fromLinkInServiceArea ) {
 			invalidRequestCauses.add(FROM_LINK_NOT_IN_SERVICE_AREA_CAUSE);

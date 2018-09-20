@@ -19,29 +19,12 @@
 
 package org.matsim.runDRT;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.matsim.api.core.v01.Coord;
-import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.TransportMode;
-import org.matsim.api.core.v01.network.Link;
-import org.matsim.api.core.v01.network.Network;
-import org.matsim.api.core.v01.population.Activity;
-import org.matsim.api.core.v01.population.Leg;
-import org.matsim.api.core.v01.population.Person;
-import org.matsim.api.core.v01.population.Plan;
-import org.matsim.api.core.v01.population.PlanElement;
-import org.matsim.api.core.v01.population.PopulationFactory;
 import org.matsim.contrib.av.robotaxi.scoring.TaxiFareConfigGroup;
 import org.matsim.contrib.av.robotaxi.scoring.TaxiFareHandler;
 import org.matsim.contrib.drt.data.validator.DrtRequestValidator;
@@ -55,46 +38,27 @@ import org.matsim.core.config.ConfigGroup;
 import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryLogging;
-import org.matsim.core.network.NetworkUtils;
-import org.matsim.core.network.algorithms.MultimodalNetworkCleaner;
-import org.matsim.core.population.routes.NetworkRoute;
 import org.matsim.core.population.routes.RouteFactories;
-import org.matsim.core.router.MainModeIdentifierImpl;
 import org.matsim.core.router.StageActivityTypes;
 import org.matsim.core.router.StageActivityTypesImpl;
-import org.matsim.core.router.TripStructureUtils;
-import org.matsim.core.router.TripStructureUtils.Trip;
-import org.matsim.core.utils.geometry.geotools.MGC;
-import org.matsim.core.utils.gis.ShapeFileReader;
-import org.matsim.core.utils.io.IOUtils;
 import org.matsim.run.RunBerlinScenario;
-import org.opengis.feature.simple.SimpleFeature;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.Point;
 
 /**
- * This class modifies the default berlin scenario and starts a simulation run.
+ * This class starts a simulation run with DRT.
  * 
- * Modifications:
- * 
- * 	- A DRT mode is added.
- * 		- The input DRT vehicles file specifies the number of vehicles and the vehicle capacity.
- * 		- The vehicle capacity is set to 1 which means there is no ride-sharing.
- * 		- The service area is set to the the Greater Berlin area (= the area including the Berliner Ring, see input shape file).
- * 
+ *  - The input DRT vehicles file specifies the number of vehicles and the vehicle capacity (a vehicle capacity of 1 means there is no ride-sharing).
+ * 	- The DRT service area is set to the the Greater Berlin area (= the area including the Berliner Ring, see input shape file).
  * 	- The private car mode is no longer allowed in the Berlin city area (see input shape file) and may only be used for trips within Brandenburg (network mode: 'car_bb').
- * 	
  * 	- Initial plans are modified in the following way:
  * 		- Car trips within the Berlin area are replaced by DRT trips.
- * 		- Plans with car trips from Brandenburg to Berlin or the other way round are replaced by a direct pt trip and 3 park-and-ride trips (car_bb + S / RB / DRT) 
+ * 		- Car trips from Brandenburg to Berlin or the other way round are replaced by 4 alternatives: a direct pt trip and 3 park-and-ride trips (car_bb + S / RB / DRT) 
  * 
  * @author ikaddoura
  */
 
-public class RunBerlinDrtScenario {
+public class RunBerlinDrtScenario1 {
 
-	private static final Logger log = Logger.getLogger(RunBerlinDrtScenario.class);
+	private static final Logger log = Logger.getLogger(RunBerlinDrtScenario1.class);
 
 	static final String drtServiceAreaAttribute = "drtServiceArea";
 
@@ -112,7 +76,6 @@ public class RunBerlinDrtScenario {
 	private final String parkAndRideActivity = "park-and-ride";
 	private final double parkAndRideDuration = 60.;
 	
-	private final boolean turnDefaultBerlinScenarioIntoDRTscenario;
 	private final String transitStopCoordinatesSFile;
 	private final String transitStopCoordinatesRBFile;
 	private final String berlinShapeFile;
@@ -135,7 +98,6 @@ public class RunBerlinDrtScenario {
 		String drtServiceAreaShapeFile;
 		String transitStopCoordinatesSFile;
 		String transitStopCoordinatesRBFile;
-		boolean turnDefaultBerlinScenarioIntoDRTscenario;		
 		
 		if (args.length > 0) {
 			throw new RuntimeException();
@@ -147,23 +109,17 @@ public class RunBerlinDrtScenario {
 			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
 			transitStopCoordinatesSFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_S-zoneC.csv";
 			transitStopCoordinatesRBFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_RB-zoneC.csv";
-			turnDefaultBerlinScenarioIntoDRTscenario = true;
 		}		
 		
-		new RunBerlinDrtScenario( configFileName, overridingConfigFileName, turnDefaultBerlinScenarioIntoDRTscenario, berlinShapeFile, drtServiceAreaShapeFile, transitStopCoordinatesSFile, transitStopCoordinatesRBFile).run() ;
+		new RunBerlinDrtScenario1( configFileName, overridingConfigFileName, berlinShapeFile, drtServiceAreaShapeFile, transitStopCoordinatesSFile, transitStopCoordinatesRBFile).run() ;
 	}
 	
-	public RunBerlinDrtScenario( String configFileName, String overridingConfigFileName, boolean turnDefaultBerlinScenarioIntoDRTscenario, String berlinShapeFile, String drtServiceAreaShapeFile, String transitStopCoordinatesSFile, String transitStopCoordinatesRBFile) {
+	public RunBerlinDrtScenario1( String configFileName, String overridingConfigFileName, String berlinShapeFile, String drtServiceAreaShapeFile, String transitStopCoordinatesSFile, String transitStopCoordinatesRBFile) {
 		
-		this.turnDefaultBerlinScenarioIntoDRTscenario = turnDefaultBerlinScenarioIntoDRTscenario;
 		this.transitStopCoordinatesSFile = transitStopCoordinatesSFile;
 		this.transitStopCoordinatesRBFile = transitStopCoordinatesRBFile;
 		this.berlinShapeFile = berlinShapeFile;
 		this.drtServiceAreaShapeFile = drtServiceAreaShapeFile;
-
-		if (!turnDefaultBerlinScenarioIntoDRTscenario) {			
-			log.info("Expecting network and plans to be prepared for the DRT scenario.");
-		}
 				
 		this.berlin = new RunBerlinScenario( configFileName, overridingConfigFileName );
 	}
@@ -205,29 +161,26 @@ public class RunBerlinDrtScenario {
 		
 		scenario = berlin.prepareScenario();
 		
-		if (turnDefaultBerlinScenarioIntoDRTscenario) {
-			
-			BerlinShpUtils shpUtils = new BerlinShpUtils(berlinShapeFile, drtServiceAreaShapeFile);
-			
-			new BerlinNetworkModification(shpUtils,
-					this.taxiNetworkMode,
-					modeToReplaceCarTripsInBrandenburg,
-					drtServiceAreaAttribute).run(this.scenario);
-			
-			new BerlinPlansModification(transitStopCoordinatesSFile,
-					transitStopCoordinatesRBFile,
-					shpUtils,
-					inputPersonAttributesSubpopulationPerson,
-					modeToReplaceCarTripsInBerlin,
-					modeToReplaceCarTripsInBrandenburg,
-					modeToReplaceCarTripsToFromBerlin,
-					stageActivities,
-					parkAndRideActivity,
-					parkAndRideDuration,
-					splitTripsS,
-					splitTripsRB,
-					splitTripsTaxi).run(scenario);
-		}	
+		BerlinShpUtils shpUtils = new BerlinShpUtils(berlinShapeFile, drtServiceAreaShapeFile);
+		
+		new BerlinNetworkModification(shpUtils,
+				this.taxiNetworkMode,
+				modeToReplaceCarTripsInBrandenburg,
+				drtServiceAreaAttribute).run(this.scenario);
+		
+		new BerlinPlansModification(transitStopCoordinatesSFile,
+				transitStopCoordinatesRBFile,
+				shpUtils,
+				inputPersonAttributesSubpopulationPerson,
+				modeToReplaceCarTripsInBerlin,
+				modeToReplaceCarTripsInBrandenburg,
+				modeToReplaceCarTripsToFromBerlin,
+				stageActivities,
+				parkAndRideActivity,
+				parkAndRideDuration,
+				splitTripsS,
+				splitTripsRB,
+				splitTripsTaxi).run(scenario);	
 			
 		RouteFactories routeFactories = scenario.getPopulation().getFactory().getRouteFactories();
 		routeFactories.setRouteFactory(DrtRoute.class, new DrtRouteFactory());
