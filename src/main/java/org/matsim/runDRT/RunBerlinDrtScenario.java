@@ -350,92 +350,113 @@ public class RunBerlinDrtScenario {
 						// berlin --> brandenburg
 						tripsBERtoBB++;
 
-						String berlinTripmode = null;
 						if (mainMode.equals(TransportMode.car)) {
-							berlinTripmode = modeToReplaceCarTripsToFromBerlin;
+							
+							String berlinTripmode = this.modeToReplaceCarTripsInBerlin;
+							String brandenburgTripmode = modeToReplaceCarTripsInBrandenburg;
+							String directTripMode = this.modeToReplaceCarTripsToFromBerlin;
+							
+							// only split trips for former car trips
+							directTripPlan.addLeg(factory.createLeg(directTripMode));
+							directTripPlan.addActivity(trip.getDestinationActivity());
+
+							splitTripPlanPT1.addLeg(factory.createLeg(berlinTripmode));
+							Activity prActivity1 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesS));
+							prActivity1.setMaximumDuration(parkAndRideDuration);
+							splitTripPlanPT1.addActivity(prActivity1);
+							splitTripPlanPT1.addLeg(factory.createLeg(brandenburgTripmode));
+							splitTripPlanPT1.addActivity(trip.getDestinationActivity());
+
+							splitTripPlanPT2.addLeg(factory.createLeg(berlinTripmode));
+							Activity prActivity2 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesRB));
+							prActivity2.setMaximumDuration(parkAndRideDuration);
+							splitTripPlanPT2.addActivity(prActivity2);
+							splitTripPlanPT2.addLeg(factory.createLeg(brandenburgTripmode));
+							splitTripPlanPT2.addActivity(trip.getDestinationActivity());
+
+							splitTripPlanCar.addLeg(factory.createLeg(berlinTripmode));
+							Coord firstCarLink = getFirstCarLinkFromPreviousRoute(trip, scenario.getNetwork());
+							if (firstCarLink != null) {
+								Activity prActivity3 = factory.createActivityFromCoord(parkAndRideActivity, firstCarLink);
+								prActivity3.setMaximumDuration(parkAndRideDuration);
+								splitTripPlanCar.addActivity(prActivity3);
+								splitTripPlanCar.addLeg(factory.createLeg(brandenburgTripmode));
+							} else {
+								throw new RuntimeException("couldn't find car link. Aborting...");
+							}
+							splitTripPlanCar.addActivity(trip.getDestinationActivity());
+							
 						} else {
-							berlinTripmode = mainMode;
+							String directTripMode = mainMode;
+							
+							directTripPlan.addLeg(factory.createLeg(directTripMode));
+							directTripPlan.addActivity(trip.getDestinationActivity());
+
+							splitTripPlanPT1.addLeg(factory.createLeg(directTripMode));
+							splitTripPlanPT1.addActivity(trip.getDestinationActivity());
+
+							splitTripPlanPT2.addLeg(factory.createLeg(directTripMode));
+							splitTripPlanPT2.addActivity(trip.getDestinationActivity());
+
+							splitTripPlanCar.addLeg(factory.createLeg(directTripMode));
+							splitTripPlanCar.addActivity(trip.getDestinationActivity());
 						}
-
-						String brandenburgTripmode = null;
-						if (mainMode.equals(TransportMode.car)) {
-							brandenburgTripmode = modeToReplaceCarTripsInBrandenburg;
-						} else {
-							brandenburgTripmode = mainMode;
-						}
-
-						directTripPlan.addLeg(factory.createLeg(berlinTripmode));
-						directTripPlan.addActivity(trip.getDestinationActivity());
-
-						splitTripPlanPT1.addLeg(factory.createLeg(berlinTripmode));
-						Activity prActivity1 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesS));
-						prActivity1.setMaximumDuration(parkAndRideDuration);
-						splitTripPlanPT1.addActivity(prActivity1);
-						splitTripPlanPT1.addLeg(factory.createLeg(brandenburgTripmode));
-						splitTripPlanPT1.addActivity(trip.getDestinationActivity());
-
-						splitTripPlanPT2.addLeg(factory.createLeg(berlinTripmode));
-						Activity prActivity2 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesRB));
-						prActivity2.setMaximumDuration(parkAndRideDuration);
-						splitTripPlanPT2.addActivity(prActivity2);
-						splitTripPlanPT2.addLeg(factory.createLeg(brandenburgTripmode));
-						splitTripPlanPT2.addActivity(trip.getDestinationActivity());
-
-						splitTripPlanCar.addLeg(factory.createLeg(berlinTripmode));
-						Coord firstCarLink = getFirstCarLinkFromPreviousRoute(trip, scenario.getNetwork());
-						if (firstCarLink != null) {
-							Activity prActivity3 = factory.createActivityFromCoord(parkAndRideActivity, firstCarLink);
-							prActivity3.setMaximumDuration(parkAndRideDuration);
-							splitTripPlanCar.addActivity(prActivity3);
-							splitTripPlanCar.addLeg(factory.createLeg(brandenburgTripmode));
-						}
-						splitTripPlanCar.addActivity(trip.getDestinationActivity());
 
 					} else if (!isCoordInBerlinArea(trip.getOriginActivity().getCoord())
 							&& isCoordInBerlinArea(trip.getDestinationActivity().getCoord())) {
 						// brandenburg --> berlin
 						tripsBBtoBER++;
 
-						String brandenburgTripmode = null;
 						if (mainMode.equals(TransportMode.car)) {
-							brandenburgTripmode = modeToReplaceCarTripsInBrandenburg;
+							
+							String berlinTripmode = this.modeToReplaceCarTripsInBerlin;
+							String brandenburgTripmode = modeToReplaceCarTripsInBrandenburg;
+							String directTripMode = this.modeToReplaceCarTripsToFromBerlin;
+						
+							directTripPlan.addLeg(factory.createLeg(directTripMode));
+							directTripPlan.addActivity(trip.getDestinationActivity());
+
+							splitTripPlanPT1.addLeg(factory.createLeg(brandenburgTripmode));
+							Activity prActivity1 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesS));
+							prActivity1.setMaximumDuration(parkAndRideDuration);
+							splitTripPlanPT1.addActivity(prActivity1);
+							splitTripPlanPT1.addLeg(factory.createLeg(berlinTripmode));
+							splitTripPlanPT1.addActivity(trip.getDestinationActivity());
+
+							splitTripPlanPT2.addLeg(factory.createLeg(brandenburgTripmode));
+							Activity prActivity2 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesRB));
+							prActivity2.setMaximumDuration(parkAndRideDuration);
+							splitTripPlanPT2.addActivity(prActivity2);
+							splitTripPlanPT2.addLeg(factory.createLeg(berlinTripmode));
+							splitTripPlanPT2.addActivity(trip.getDestinationActivity());
+
+							Coord lastCarLink = getLastCarLinkFromPreviousRoute(trip, scenario.getNetwork());
+							if (lastCarLink != null) {
+								splitTripPlanCar.addLeg(factory.createLeg(brandenburgTripmode));
+								Activity prActivity3 = factory.createActivityFromCoord(parkAndRideActivity, lastCarLink);
+								prActivity3.setMaximumDuration(parkAndRideDuration);
+								splitTripPlanCar.addActivity(prActivity3);
+							} else {
+								throw new RuntimeException("couldn't find car link. Aborting...");
+							}
+							splitTripPlanCar.addLeg(factory.createLeg(berlinTripmode));
+							splitTripPlanCar.addActivity(trip.getDestinationActivity());
+						
 						} else {
-							brandenburgTripmode = mainMode;
+							String directTripMode = mainMode;
+							
+							directTripPlan.addLeg(factory.createLeg(directTripMode));
+							directTripPlan.addActivity(trip.getDestinationActivity());
+
+							splitTripPlanPT1.addLeg(factory.createLeg(directTripMode));
+							splitTripPlanPT1.addActivity(trip.getDestinationActivity());
+
+							splitTripPlanPT2.addLeg(factory.createLeg(directTripMode));
+							splitTripPlanPT2.addActivity(trip.getDestinationActivity());
+
+							splitTripPlanCar.addLeg(factory.createLeg(directTripMode));
+							splitTripPlanCar.addActivity(trip.getDestinationActivity());
 						}
-
-						String berlinTripmode = null;
-						if (mainMode.equals(TransportMode.car)) {
-							berlinTripmode = modeToReplaceCarTripsToFromBerlin;
-						} else {
-							berlinTripmode = mainMode;
-						}
-
-						directTripPlan.addLeg(factory.createLeg(berlinTripmode));
-						directTripPlan.addActivity(trip.getDestinationActivity());
-
-						splitTripPlanPT1.addLeg(factory.createLeg(brandenburgTripmode));
-						Activity prActivity1 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesS));
-						prActivity1.setMaximumDuration(parkAndRideDuration);
-						splitTripPlanPT1.addActivity(prActivity1);
-						splitTripPlanPT1.addLeg(factory.createLeg(berlinTripmode));
-						splitTripPlanPT1.addActivity(trip.getDestinationActivity());
-
-						splitTripPlanPT2.addLeg(factory.createLeg(brandenburgTripmode));
-						Activity prActivity2 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesRB));
-						prActivity2.setMaximumDuration(parkAndRideDuration);
-						splitTripPlanPT2.addActivity(prActivity2);
-						splitTripPlanPT2.addLeg(factory.createLeg(berlinTripmode));
-						splitTripPlanPT2.addActivity(trip.getDestinationActivity());
-
-						Coord lastCarLink = getLastCarLinkFromPreviousRoute(trip, scenario.getNetwork());
-						if (lastCarLink != null) {
-							splitTripPlanCar.addLeg(factory.createLeg(brandenburgTripmode));
-							Activity prActivity3 = factory.createActivityFromCoord(parkAndRideActivity, lastCarLink);
-							prActivity3.setMaximumDuration(parkAndRideDuration);
-							splitTripPlanCar.addActivity(prActivity3);
-						}
-						splitTripPlanCar.addLeg(factory.createLeg(berlinTripmode));
-						splitTripPlanCar.addActivity(trip.getDestinationActivity());
 
 					} else if (!isCoordInBerlinArea(trip.getOriginActivity().getCoord())
 							&& !isCoordInBerlinArea(trip.getDestinationActivity().getCoord())) {
