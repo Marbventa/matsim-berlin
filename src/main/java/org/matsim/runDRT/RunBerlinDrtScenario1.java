@@ -103,7 +103,7 @@ public class RunBerlinDrtScenario1 {
 			throw new RuntimeException();
 			
 		} else {		
-			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt-v5.2-1pct.config.xml"; // berlin 1pct
+			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt1-v5.2-1pct.config.xml"; // berlin 1pct
 			overridingConfigFileName = null;
 			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin-shp/berlin.shp";
 			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
