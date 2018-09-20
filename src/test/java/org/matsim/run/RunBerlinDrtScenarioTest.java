@@ -39,6 +39,7 @@ public class RunBerlinDrtScenarioTest {
 	@Rule public MatsimTestUtils utils = new MatsimTestUtils() ;
 	
 
+	// private car mode not allowed in berlin
 	@Test
 	public final void testDrtBerlinScenario1() {
 		try {
@@ -78,6 +79,7 @@ public class RunBerlinDrtScenarioTest {
 		}
 	}
 	
+	// private car in berlin still allowed, additional drt mode, reward if drt instead of private car
 	@Test
 	public final void testDrtBerlinScenario2() {
 		try {
