@@ -61,11 +61,16 @@ public class RunBerlinDrtScenario0 {
 	private boolean hasPreparedConfig = false ;
 	private boolean hasPreparedScenario = false ;
 	private boolean hasPreparedControler = false ;
+	
+	private final double dailyReward;
+	private final String privateCarMode;
 
 	public static void main(String[] args) {
 		
 		String configFileName ;
 		String overridingConfigFileName;
+		double dailyReward;
+		String privateCarMode;
 		
 		if (args.length > 0) {
 			throw new RuntimeException();
@@ -73,14 +78,18 @@ public class RunBerlinDrtScenario0 {
 		} else {		
 			configFileName = null;
 			overridingConfigFileName = null;
+			dailyReward = 0.;
+			privateCarMode = null;
 		}		
 		
-		new RunBerlinDrtScenario0( configFileName, overridingConfigFileName).run() ;
+		new RunBerlinDrtScenario0( configFileName, overridingConfigFileName, dailyReward, privateCarMode).run() ;
 	}
 	
-	public RunBerlinDrtScenario0( String configFileName, String overridingConfigFileName) {
+	public RunBerlinDrtScenario0( String configFileName, String overridingConfigFileName, double dailyReward, String privateCarMode) {
 				
-		this.berlin = new RunBerlinScenario( configFileName, overridingConfigFileName );
+		this.berlin = new RunBerlinScenario( configFileName, overridingConfigFileName);
+		this.dailyReward = dailyReward;
+		this.privateCarMode = privateCarMode;
 	}
 
 	public Controler prepareControler() {
@@ -106,6 +115,16 @@ public class RunBerlinDrtScenario0 {
 			@Override
 			public void install() {
 				addEventHandlerBinding().to(TaxiFareHandler.class).asEagerSingleton();
+			}
+		});
+		
+		// rewards for no longer owning a car
+		controler.addOverridingModule(new AbstractModule() {
+			@Override
+			public void install() {
+				this.addEventHandlerBinding().toInstance(new DailyRewardHandlerDrtInsteadOfCar(dailyReward, privateCarMode));			
+				this.bind(DRTPassengerTracker.class).asEagerSingleton();
+				this.addEventHandlerBinding().to(DRTPassengerTracker.class);
 			}
 		});
 		

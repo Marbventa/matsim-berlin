@@ -122,7 +122,7 @@ public class RunBerlinDrtScenarioTest {
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt1-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
 						
-			RunBerlinDrtScenario0 berlin = new RunBerlinDrtScenario0(configFileName, overridingConfigFileName);
+			RunBerlinDrtScenario0 berlin = new RunBerlinDrtScenario0(configFileName, overridingConfigFileName, 1000., "car_bb");
 			
 			Config config =  berlin.prepareConfig() ;
 			config.plans().setInputFile("../../../test/input/drt-berlin-v5.2-1pct.plans_test-agents.xml");
