@@ -160,11 +160,6 @@
 				<param name="marginalUtilityOfTraveling_util_hr" value="1.8" />
 				<param name="mode" value="drt" />
 			</parameterset>
-			<parameterset type="modeParams">
-				<param name="marginalUtilityOfTraveling_util_hr" value="-6.0" />
-				<param name="mode" value="drt_optimizer" />
-				<param name="monetaryDistanceRate" value="-0.00035" />
-			</parameterset>
 		</parameterset>
 	</module>
 	

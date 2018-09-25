@@ -162,11 +162,6 @@
 				<param name="mode" value="car" />
 				<param name="monetaryDistanceRate" value="-0.0002" />
 			</parameterset>
-			<parameterset type="modeParams">
-				<param name="marginalUtilityOfTraveling_util_hr" value="-6.0" />
-				<param name="mode" value="drt_optimizer" />
-				<param name="monetaryDistanceRate" value="-0.00035" />
-			</parameterset>	
 			<parameterset type="modeParams" >
 				<param name="constant" value="-1.5" />
 				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
