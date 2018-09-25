@@ -114,7 +114,9 @@ public class RunBerlinScenario {
 		
 		// so that config settings in code, which come after the settings from the initial config file, can
 		// be overridden without having to change the jar file.  Normally empty.
-		if (this.overridingConfigFileName!=null || this.overridingConfigFileName!="null" || this.overridingConfigFileName!="") {
+		if (this.overridingConfigFileName==null || this.overridingConfigFileName=="null" || this.overridingConfigFileName=="") {
+			// do not load overriding config
+		} else {
 			ConfigUtils.loadConfig( config, this.overridingConfigFileName );	
 		}
 		// note that the path for this is different when run from GUI (path of original config) vs.
