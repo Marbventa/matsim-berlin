@@ -100,7 +100,7 @@ public class RunBerlinDrtScenario0 {
 		controler = berlin.prepareControler();
 		
 		// drt + dvrp module
-		DrtControlerCreator.addDrtToControler(controler);
+		DrtControlerCreator.addDrtAsSingleDvrpModeToControler(controler);
 		
 		// reject drt requests outside the service area
 		controler.addOverridingModule(new AbstractModule() {	
