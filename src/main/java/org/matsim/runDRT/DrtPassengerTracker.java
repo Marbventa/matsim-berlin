@@ -46,8 +46,8 @@ import org.matsim.vehicles.Vehicle;
  * @author ikaddoura
  */
 
-public class DRTPassengerTracker implements PersonDepartureEventHandler, PersonArrivalEventHandler, ActivityEndEventHandler, PersonEntersVehicleEventHandler, PersonLeavesVehicleEventHandler {
-	private static final Logger log = Logger.getLogger(DRTPassengerTracker.class);
+public class DrtPassengerTracker implements PersonDepartureEventHandler, PersonArrivalEventHandler, ActivityEndEventHandler, PersonEntersVehicleEventHandler, PersonLeavesVehicleEventHandler {
+	private static final Logger log = Logger.getLogger(DrtPassengerTracker.class);
 
 	private final Set<Id<Person>> taxiDrivers = new HashSet<>();
 	private final Set<Id<Person>> currentTaxiPassengers = new HashSet<>();

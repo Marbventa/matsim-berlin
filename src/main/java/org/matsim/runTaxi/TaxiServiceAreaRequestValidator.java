@@ -17,35 +17,35 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.runDRT;
+package org.matsim.runTaxi;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.matsim.contrib.drt.data.DrtRequest;
-import org.matsim.contrib.drt.data.validator.DefaultDrtRequestValidator;
-import org.matsim.contrib.drt.data.validator.DrtRequestValidator;
+import org.matsim.contrib.taxi.data.TaxiRequest;
+import org.matsim.contrib.taxi.data.validator.DefaultTaxiRequestValidator;
+import org.matsim.contrib.taxi.data.validator.TaxiRequestValidator;
 
 /**
 * @author ikaddoura
 */
 
-public class ServiceAreaRequestValidator implements DrtRequestValidator {
+public class TaxiServiceAreaRequestValidator implements TaxiRequestValidator {
 
 	public static final String FROM_LINK_NOT_IN_SERVICE_AREA_CAUSE = "from_link_not_in_service_area";
 	public static final String TO_LINK_NOT_IN_SERVICE_AREA_CAUSE = "to_link_not_in_service_area";
 
-	private final DefaultDrtRequestValidator delegate = new DefaultDrtRequestValidator();
+	private final DefaultTaxiRequestValidator delegate = new DefaultTaxiRequestValidator();
 
 	@Override
-	public Set<String> validateDrtRequest(DrtRequest request) {
+	public Set<String> validateTaxiRequest(TaxiRequest request) {
 		
 		Set<String> invalidRequestCauses = new HashSet<>();
 		
-		invalidRequestCauses.addAll(this.delegate.validateDrtRequest(request));
+		invalidRequestCauses.addAll(this.delegate.validateTaxiRequest(request));
 		
-		boolean fromLinkInServiceArea = (boolean) request.getFromLink().getAttributes().getAttribute(RunBerlinDrtScenario1.drtServiceAreaAttribute);
-		boolean toLinkInServiceArea = (boolean) request.getToLink().getAttributes().getAttribute(RunBerlinDrtScenario1.drtServiceAreaAttribute);
+		boolean fromLinkInServiceArea = (boolean) request.getFromLink().getAttributes().getAttribute(RunBerlinTaxiScenario1.taxiServiceAreaAttribute);
+		boolean toLinkInServiceArea = (boolean) request.getToLink().getAttributes().getAttribute(RunBerlinTaxiScenario1.taxiServiceAreaAttribute);
 
 		if (!fromLinkInServiceArea ) {
 			invalidRequestCauses.add(FROM_LINK_NOT_IN_SERVICE_AREA_CAUSE);

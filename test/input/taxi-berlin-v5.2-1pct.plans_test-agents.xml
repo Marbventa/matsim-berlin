@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE population SYSTEM "http://www.matsim.org/files/dtd/population_v6.dtd">
+
+<population>
+
+	<attributes>
+		<attribute name="coordinateReferenceSystem" class="java.lang.String" >GK4</attribute>
+	</attributes>
+
+<!-- ====================================================================== -->
+
+	<person id="100033101">
+		<attributes>
+			<attribute name="CarOwnerInBaseCase" class="java.lang.Boolean" >true</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="home_53400.0" x="4628371.54087594" y="5829845.374484305" end_time="07:48:00" >
+				<attributes>
+					<attribute name="zoneId" class="java.lang.String" >12064472</attribute>
+				</attributes>
+			</activity>
+			<leg mode="car_bb">
+			</leg>
+			<activity type="park-and-ride" x="4628104.442420426" y="5828833.3976725275" max_dur="00:01:00" >
+			</activity>
+			<leg mode="bicycle">
+			</leg>
+			<activity type="work_8400.0" x="4598341.775405367" y="5818112.629455971" end_time="11:27:00" >
+				<attributes>
+					<attribute name="cemdapStopDuration_s" class="java.lang.Integer" >8160</attribute>
+					<attribute name="zoneId" class="java.lang.String" >908010302</attribute>
+				</attributes>
+			</activity>
+			<leg mode="taxi">
+			</leg>
+			<activity type="shopping_1200.0" x="4597541.18094655" y="5817273.398353233" max_dur="00:21:00" >
+				<attributes>
+					<attribute name="cemdapStopDuration_s" class="java.lang.Integer" >1260</attribute>
+					<attribute name="zoneId" class="java.lang.String" >908010211</attribute>
+				</attributes>
+			</activity>
+			<leg mode="bicycle">
+			</leg>
+			<activity type="shopping_1200.0" x="4602895.99875793" y="5808954.951496554" max_dur="00:24:00" >
+				<attributes>
+					<attribute name="cemdapStopDuration_s" class="java.lang.Integer" >1440</attribute>
+					<attribute name="zoneId" class="java.lang.String" >908041039</attribute>
+				</attributes>
+			</activity>
+			<leg mode="bicycle">
+			</leg>
+			<activity type="park-and-ride" x="4603139.379672928" y="5807465.218550463" max_dur="00:01:00" >
+			</activity>
+			<leg mode="bicycle">
+			</leg>
+			<activity type="home_53400.0" x="4628371.54087594" y="5829845.374484305" >
+				<attributes>
+					<attribute name="cemdapStopDuration_s" class="java.lang.Integer" >25440</attribute>
+					<attribute name="zoneId" class="java.lang.String" >12064472</attribute>
+				</attributes>
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="53874901">
+		<attributes>
+			<attribute name="CarOwnerInBaseCase" class="java.lang.Boolean" >true</attribute>
+		</attributes>
+		
+		<plan selected="yes">
+			<activity type="home_91800.0" x="4612067.1701425975" y="5793959.351099634" end_time="00:11:23" >
+				<attributes>
+					<attribute name="zoneId" class="java.lang.String" >12061260</attribute>
+				</attributes>
+			</activity>
+			<leg mode="taxi">
+			</leg>
+			<activity type="leisure_2400.0" x="4611723.51962273" y="5807463.850897713" max_dur="00:39:40" >
+				<attributes>
+					<attribute name="cemdapStopDuration_s" class="java.lang.Integer" >2160</attribute>
+					<attribute name="zoneId" class="java.lang.String" >909031201</attribute>
+				</attributes>
+			</activity>
+			<leg mode="taxi">
+			</leg>
+			<activity type="home_91800.0" x="4612067.1701425975" y="5793959.351099634" >
+				<attributes>
+					<attribute name="cemdapStopDuration_s" class="java.lang.Integer" >66780</attribute>
+					<attribute name="zoneId" class="java.lang.String" >12061260</attribute>
+				</attributes>
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+</population>

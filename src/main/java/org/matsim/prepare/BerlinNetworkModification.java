@@ -17,7 +17,7 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.runDRT;
+package org.matsim.prepare;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,13 +37,13 @@ public class BerlinNetworkModification {
 	private final BerlinShpUtils shpUtils;
 	private final String taxiNetworkMode;
 	private final String modeToReplaceCarTripsInBrandenburg;
-	private final String drtServiceAreaAttribute;
+	private final String serviceAreaAttribute;
 
 	public BerlinNetworkModification(BerlinShpUtils shpUtils, String taxiNetworkMode, String modeToReplaceCarTripsInBrandenburg, String drtServiceAreaAttribute) {
 		this.shpUtils = shpUtils;
 		this.taxiNetworkMode = taxiNetworkMode;
 		this.modeToReplaceCarTripsInBrandenburg = modeToReplaceCarTripsInBrandenburg;
-		this.drtServiceAreaAttribute = drtServiceAreaAttribute;
+		this.serviceAreaAttribute = drtServiceAreaAttribute;
 	}
 
 	public void run(Scenario scenario) {
@@ -72,9 +72,9 @@ public class BerlinNetworkModification {
 
 				if (shpUtils.isCoordInDrtServiceArea(link.getFromNode().getCoord())
 						|| shpUtils.isCoordInDrtServiceArea(link.getToNode().getCoord())) {
-					link.getAttributes().putAttribute(drtServiceAreaAttribute, true);
+					link.getAttributes().putAttribute(serviceAreaAttribute, true);
 				} else {
-					link.getAttributes().putAttribute(drtServiceAreaAttribute, false);
+					link.getAttributes().putAttribute(serviceAreaAttribute, false);
 				}
 
 			} else if (link.getAllowedModes().contains(TransportMode.pt)) {

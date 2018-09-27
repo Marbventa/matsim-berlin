@@ -17,7 +17,7 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.runDRT;
+package org.matsim.prepare;
 
 import java.util.Collection;
 import java.util.HashMap;

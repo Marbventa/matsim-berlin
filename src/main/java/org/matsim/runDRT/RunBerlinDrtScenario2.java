@@ -39,6 +39,9 @@ import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryLogging;
 import org.matsim.core.population.routes.RouteFactories;
+import org.matsim.prepare.BerlinNetworkModification;
+import org.matsim.prepare.BerlinPlansModificationTagFormerCarUsers;
+import org.matsim.prepare.BerlinShpUtils;
 import org.matsim.run.RunBerlinScenario;
 
 /**
@@ -118,7 +121,7 @@ public class RunBerlinDrtScenario2 {
 		controler.addOverridingModule(new AbstractModule() {	
 			@Override
 			public void install() {
-				this.bind(DrtRequestValidator.class).toInstance(new ServiceAreaRequestValidator());
+				this.bind(DrtRequestValidator.class).toInstance(new DrtServiceAreaRequestValidator());
 			}
 		});
 		
@@ -137,8 +140,8 @@ public class RunBerlinDrtScenario2 {
 				
 				this.addEventHandlerBinding().toInstance(new DailyRewardHandlerDrtInsteadOfCar(dailyRewardDrtInsteadOfPrivateCar, modeToReplaceCarTripsInBrandenburg));
 				
-				this.bind(DRTPassengerTracker.class).asEagerSingleton();
-				this.addEventHandlerBinding().to(DRTPassengerTracker.class);
+				this.bind(DrtPassengerTracker.class).asEagerSingleton();
+				this.addEventHandlerBinding().to(DrtPassengerTracker.class);
 			}
 		});
 		

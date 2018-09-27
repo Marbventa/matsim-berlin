@@ -17,7 +17,7 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.runDRT;
+package org.matsim.prepare;
 
 import java.io.BufferedReader;
 import java.io.IOException;

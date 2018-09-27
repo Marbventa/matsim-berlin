@@ -17,7 +17,7 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.runDRT;
+package org.matsim.runTaxi;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -40,19 +40,19 @@ import com.google.inject.Inject;
 * @author ikaddoura
 */
 
-public class DailyRewardHandlerDrtInsteadOfCar implements PersonEntersVehicleEventHandler {
-	private static final Logger log = Logger.getLogger(DailyRewardHandlerDrtInsteadOfCar.class);
+public class DailyRewardHandlerTaxiInsteadOfCar implements PersonEntersVehicleEventHandler {
+	private static final Logger log = Logger.getLogger(DailyRewardHandlerTaxiInsteadOfCar.class);
 
 	private final Set<Id<Person>> passengersThatHaveAlreadyReceivedTheirReward = new HashSet<>();
 	
-	private int drtUsersFormerNonCarUsers = 0;
+	private int taxiUsersFormerNonCarUsers = 0;
 	private double totalRewardBySAVusersFormerNonCarUsers = 0.;
 	
-	private int drtUsersFormerCarUsers = 0;
-	private double totalRewardsEarnedByDRTusersFormerCarUsers = 0.;
+	private int taxiUsersFormerCarUsers = 0;
+	private double totalRewardsEarnedByTaxiUsersFormerCarUsers = 0.;
 	
 	@Inject
-	private DrtPassengerTracker savTracker;
+	private TaxiPassengerTracker savTracker;
 	
 	@Inject
 	private EventsManager eventsManager;
@@ -63,7 +63,7 @@ public class DailyRewardHandlerDrtInsteadOfCar implements PersonEntersVehicleEve
 	private final double dailyReward;
 	private final String carMode;
 	
-	public DailyRewardHandlerDrtInsteadOfCar(double dailyReward, String carMode) {
+	public DailyRewardHandlerTaxiInsteadOfCar(double dailyReward, String carMode) {
 		this.dailyReward = dailyReward;
 		this.carMode = carMode;
 	}
@@ -86,12 +86,12 @@ public class DailyRewardHandlerDrtInsteadOfCar implements PersonEntersVehicleEve
 				}
 								
 				if (carOwnerInBaseCase && personWithoutCarTrips(person.getSelectedPlan())) {
-					drtUsersFormerCarUsers++;
-					totalRewardsEarnedByDRTusersFormerCarUsers += dailyReward;
+					taxiUsersFormerCarUsers++;
+					totalRewardsEarnedByTaxiUsersFormerCarUsers += dailyReward;
 					this.eventsManager.processEvent(new PersonMoneyEvent(event.getTime(), event.getPersonId(), dailyReward ));				
 					
 				} else {
-					drtUsersFormerNonCarUsers++;
+					taxiUsersFormerNonCarUsers++;
 				}
 				this.passengersThatHaveAlreadyReceivedTheirReward.add(event.getPersonId());
 			}
@@ -116,14 +116,14 @@ public class DailyRewardHandlerDrtInsteadOfCar implements PersonEntersVehicleEve
 		
 		this.passengersThatHaveAlreadyReceivedTheirReward.clear();
 		
-		this.drtUsersFormerCarUsers = 0;
-		this.drtUsersFormerNonCarUsers = 0;
-		this.totalRewardsEarnedByDRTusersFormerCarUsers = 0.;
+		this.taxiUsersFormerCarUsers = 0;
+		this.taxiUsersFormerNonCarUsers = 0;
+		this.totalRewardsEarnedByTaxiUsersFormerCarUsers = 0.;
 		this.totalRewardBySAVusersFormerNonCarUsers = 0.;
 	}
 
 	public int getSavUsersFormerNonCarUsers() {
-		return drtUsersFormerNonCarUsers;
+		return taxiUsersFormerNonCarUsers;
 	}
 
 	public double getTotalSAVFixCostPaidBySAVusersFormerNonCarUsers() {
@@ -131,11 +131,11 @@ public class DailyRewardHandlerDrtInsteadOfCar implements PersonEntersVehicleEve
 	}
 
 	public int getSavUsersFormerCarUsers() {
-		return drtUsersFormerCarUsers;
+		return taxiUsersFormerCarUsers;
 	}
 
 	public double getTotalSAVFixCostPaidBySAVusersFormerCarUsers() {
-		return totalRewardsEarnedByDRTusersFormerCarUsers;
+		return totalRewardsEarnedByTaxiUsersFormerCarUsers;
 	}
 
 }

@@ -17,7 +17,7 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.runDRT;
+package org.matsim.runTaxi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,18 +27,15 @@ import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.TransportMode;
 import org.matsim.contrib.av.robotaxi.scoring.TaxiFareConfigGroup;
 import org.matsim.contrib.av.robotaxi.scoring.TaxiFareHandler;
-import org.matsim.contrib.drt.data.validator.DrtRequestValidator;
-import org.matsim.contrib.drt.routing.DrtRoute;
-import org.matsim.contrib.drt.routing.DrtRouteFactory;
-import org.matsim.contrib.drt.run.DrtConfigGroup;
-import org.matsim.contrib.drt.run.DrtControlerCreator;
 import org.matsim.contrib.dvrp.run.DvrpConfigGroup;
+import org.matsim.contrib.taxi.data.validator.TaxiRequestValidator;
+import org.matsim.contrib.taxi.run.TaxiConfigGroup;
+import org.matsim.contrib.taxi.run.TaxiControlerCreator;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigGroup;
 import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryLogging;
-import org.matsim.core.population.routes.RouteFactories;
 import org.matsim.core.router.StageActivityTypes;
 import org.matsim.core.router.StageActivityTypesImpl;
 import org.matsim.prepare.BerlinNetworkModification;
@@ -47,10 +44,10 @@ import org.matsim.prepare.BerlinShpUtils;
 import org.matsim.run.RunBerlinScenario;
 
 /**
- * This class starts a simulation run with DRT.
+ * This class starts a simulation run with taxis.
  * 
- *  - The input DRT vehicles file specifies the number of vehicles and the vehicle capacity (a vehicle capacity of 1 means there is no ride-sharing).
- * 	- The DRT service area is set to the the Greater Berlin area (= the area including the Berliner Ring, see input shape file).
+ *  - The input taxi vehicles file specifies the number of vehicles and the vehicle capacity (a vehicle capacity of 1 means there is no ride-sharing).
+ * 	- The taxi service area is set to the the Greater Berlin area (= the area including the Berliner Ring, see input shape file).
  * 	- The private car mode is no longer allowed in the Berlin city area (see input shape file) and may only be used for trips within Brandenburg (network mode: 'car_bb').
  * 	- Initial plans are modified in the following way:
  * 		- Car trips within the Berlin area are replaced by DRT trips.
@@ -59,17 +56,17 @@ import org.matsim.run.RunBerlinScenario;
  * @author ikaddoura
  */
 
-public class RunBerlinDrtScenario1 {
+public class RunBerlinTaxiScenario1 {
 
-	private static final Logger log = Logger.getLogger(RunBerlinDrtScenario1.class);
+	private static final Logger log = Logger.getLogger(RunBerlinTaxiScenario1.class);
 
-	static final String drtServiceAreaAttribute = "drtServiceArea";
+	static final String taxiServiceAreaAttribute = "taxiServiceArea";
 
 	private final StageActivityTypes stageActivities = new StageActivityTypesImpl("pt interaction", "car interaction", "ride interaction");
 	private final String inputPersonAttributesSubpopulationPerson = "person";
 
 	public static final String modeToReplaceCarTripsInBrandenburg = "car_bb"; // needs to match the mode specifications in the config file
-	private final String modeToReplaceCarTripsInBerlin = TransportMode.drt;
+	private final String modeToReplaceCarTripsInBerlin = TransportMode.taxi;
 	private final String modeToReplaceCarTripsToFromBerlin = TransportMode.pt;
 	private final String taxiNetworkMode = TransportMode.car; // needs to match the mode specification in the config file
 	
@@ -82,7 +79,7 @@ public class RunBerlinDrtScenario1 {
 	private final String transitStopCoordinatesSFile;
 	private final String transitStopCoordinatesRBFile;
 	private final String berlinShapeFile;
-	private final String drtServiceAreaShapeFile;
+	private final String serviceAreaShapeFile;
 	
 	private Config config;
 	private Scenario scenario;
@@ -106,7 +103,7 @@ public class RunBerlinDrtScenario1 {
 			throw new RuntimeException();
 			
 		} else {		
-			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt1-v5.2-1pct.config.xml"; // berlin 1pct
+			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-taxi1-v5.2-1pct.config.xml"; // berlin 1pct
 			overridingConfigFileName = null;
 			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin-shp/berlin.shp";
 			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
@@ -114,15 +111,15 @@ public class RunBerlinDrtScenario1 {
 			transitStopCoordinatesRBFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_RB-zoneC.csv";
 		}		
 		
-		new RunBerlinDrtScenario1( configFileName, overridingConfigFileName, berlinShapeFile, drtServiceAreaShapeFile, transitStopCoordinatesSFile, transitStopCoordinatesRBFile).run() ;
+		new RunBerlinTaxiScenario1( configFileName, overridingConfigFileName, berlinShapeFile, drtServiceAreaShapeFile, transitStopCoordinatesSFile, transitStopCoordinatesRBFile).run() ;
 	}
 	
-	public RunBerlinDrtScenario1( String configFileName, String overridingConfigFileName, String berlinShapeFile, String drtServiceAreaShapeFile, String transitStopCoordinatesSFile, String transitStopCoordinatesRBFile) {
+	public RunBerlinTaxiScenario1( String configFileName, String overridingConfigFileName, String berlinShapeFile, String drtServiceAreaShapeFile, String transitStopCoordinatesSFile, String transitStopCoordinatesRBFile) {
 		
 		this.transitStopCoordinatesSFile = transitStopCoordinatesSFile;
 		this.transitStopCoordinatesRBFile = transitStopCoordinatesRBFile;
 		this.berlinShapeFile = berlinShapeFile;
-		this.drtServiceAreaShapeFile = drtServiceAreaShapeFile;
+		this.serviceAreaShapeFile = drtServiceAreaShapeFile;
 				
 		this.berlin = new RunBerlinScenario( configFileName, overridingConfigFileName );
 	}
@@ -134,18 +131,18 @@ public class RunBerlinDrtScenario1 {
 		
 		controler = berlin.prepareControler();
 		
-		// drt + dvrp module
-		DrtControlerCreator.addDrtAsSingleDvrpModeToControler(controler);
+		// taxi + dvrp module
+		TaxiControlerCreator.addTaxiAsSingleDvrpModeToControler(controler);
 		
-		// reject drt requests outside the service area
+		// reject taxi requests outside the service area
 		controler.addOverridingModule(new AbstractModule() {	
 			@Override
 			public void install() {
-				this.bind(DrtRequestValidator.class).toInstance(new DrtServiceAreaRequestValidator());
+				this.bind(TaxiRequestValidator.class).toInstance(new TaxiServiceAreaRequestValidator());
 			}
 		});
 		
-		// drt fares
+		// taxi fares
 		controler.addOverridingModule(new AbstractModule() {
 			@Override
 			public void install() {
@@ -164,12 +161,12 @@ public class RunBerlinDrtScenario1 {
 		
 		scenario = berlin.prepareScenario();
 		
-		BerlinShpUtils shpUtils = new BerlinShpUtils(berlinShapeFile, drtServiceAreaShapeFile);
+		BerlinShpUtils shpUtils = new BerlinShpUtils(berlinShapeFile, serviceAreaShapeFile);
 		
 		new BerlinNetworkModification(shpUtils,
 				this.taxiNetworkMode,
 				modeToReplaceCarTripsInBrandenburg,
-				drtServiceAreaAttribute).run(this.scenario);
+				taxiServiceAreaAttribute).run(this.scenario);
 		
 		new BerlinPlansModificationSplitTrips(transitStopCoordinatesSFile,
 				transitStopCoordinatesRBFile,
@@ -185,9 +182,6 @@ public class RunBerlinDrtScenario1 {
 				splitTripsRB,
 				splitTripsTaxi).run(scenario);	
 			
-		RouteFactories routeFactories = scenario.getPopulation().getFactory().getRouteFactories();
-		routeFactories.setRouteFactory(DrtRoute.class, new DrtRouteFactory());
-
 		hasPreparedScenario = true ;
 		return scenario;
 	}
@@ -195,14 +189,14 @@ public class RunBerlinDrtScenario1 {
 	public Config prepareConfig(ConfigGroup... modulesToAdd) {
 		OutputDirectoryLogging.catchLogEntries();
 		
-		// dvrp, drt and taxiFare config groups
-		List<ConfigGroup> drtModules = new ArrayList<>();
-		drtModules.add(new DvrpConfigGroup());
-		drtModules.add(new DrtConfigGroup());
-		drtModules.add(new TaxiFareConfigGroup());
+		// dvrp, taxi and taxiFare config groups
+		List<ConfigGroup> taxiModules = new ArrayList<>();
+		taxiModules.add(new DvrpConfigGroup());
+		taxiModules.add(new TaxiConfigGroup());
+		taxiModules.add(new TaxiFareConfigGroup());
 		
 		List<ConfigGroup> modules = new ArrayList<>();		
-		for (ConfigGroup module : drtModules) {
+		for (ConfigGroup module : taxiModules) {
 			modules.add(module);
 		}	
 		for (ConfigGroup module : modulesToAdd) {
@@ -211,8 +205,8 @@ public class RunBerlinDrtScenario1 {
 		
 		ConfigGroup[] modulesArray = new ConfigGroup[modules.size()];
 		config = berlin.prepareConfig(modules.toArray(modulesArray));		
-		
-		DrtControlerCreator.adjustDrtConfig(config);
+				
+		TaxiControlerCreator.adjustTaxiConfig(config);
 		
 		hasPreparedConfig = true ;
 		return config ;
