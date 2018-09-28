@@ -17,7 +17,7 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.prepare;
+package org.matsim.sav.prepare;
 
 import java.io.BufferedReader;
 import java.io.IOException;

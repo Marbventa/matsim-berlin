@@ -17,7 +17,7 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.runTaxi;
+package org.matsim.sav.runTaxi;
 
 import java.util.HashSet;
 import java.util.Set;

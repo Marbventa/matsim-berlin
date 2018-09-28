@@ -17,7 +17,7 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.runTaxi;
+package org.matsim.sav.runTaxi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +38,10 @@ import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryLogging;
 import org.matsim.core.router.StageActivityTypes;
 import org.matsim.core.router.StageActivityTypesImpl;
-import org.matsim.prepare.BerlinNetworkModification;
-import org.matsim.prepare.BerlinPlansModificationSplitTrips;
-import org.matsim.prepare.BerlinShpUtils;
 import org.matsim.run.RunBerlinScenario;
+import org.matsim.sav.prepare.BerlinNetworkModification;
+import org.matsim.sav.prepare.BerlinPlansModificationSplitTrips;
+import org.matsim.sav.prepare.BerlinShpUtils;
 
 /**
  * This class starts a simulation run with taxis.

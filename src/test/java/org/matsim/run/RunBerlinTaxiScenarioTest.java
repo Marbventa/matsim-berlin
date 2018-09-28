@@ -25,9 +25,9 @@ import org.matsim.core.config.Config;
 import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
 import org.matsim.core.network.io.NetworkWriter;
 import org.matsim.core.population.io.PopulationWriter;
-import org.matsim.runTaxi.RunBerlinTaxiScenario0;
-import org.matsim.runTaxi.RunBerlinTaxiScenario1;
-import org.matsim.runTaxi.RunBerlinTaxiScenario2;
+import org.matsim.sav.runTaxi.RunBerlinTaxiScenario0;
+import org.matsim.sav.runTaxi.RunBerlinTaxiScenario1;
+import org.matsim.sav.runTaxi.RunBerlinTaxiScenario2;
 import org.matsim.testcases.MatsimTestUtils;
 
 /**

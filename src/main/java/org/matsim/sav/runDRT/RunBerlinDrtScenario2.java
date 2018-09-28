@@ -17,7 +17,7 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.runDRT;
+package org.matsim.sav.runDRT;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +39,13 @@ import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryLogging;
 import org.matsim.core.population.routes.RouteFactories;
-import org.matsim.prepare.BerlinNetworkModification;
-import org.matsim.prepare.BerlinPlansModificationTagFormerCarUsers;
-import org.matsim.prepare.BerlinShpUtils;
 import org.matsim.run.RunBerlinScenario;
+import org.matsim.sav.DailyRewardHandlerSAVInsteadOfCar;
+import org.matsim.sav.SAVPassengerTracker;
+import org.matsim.sav.SAVPassengerTrackerImpl;
+import org.matsim.sav.prepare.BerlinNetworkModification;
+import org.matsim.sav.prepare.BerlinPlansModificationTagFormerCarUsers;
+import org.matsim.sav.prepare.BerlinShpUtils;
 
 /**
  * This class starts a simulation run with DRT.
@@ -138,10 +141,11 @@ public class RunBerlinDrtScenario2 {
 			@Override
 			public void install() {
 				
-				this.addEventHandlerBinding().toInstance(new DailyRewardHandlerDrtInsteadOfCar(dailyRewardDrtInsteadOfPrivateCar, modeToReplaceCarTripsInBrandenburg));
+				this.addEventHandlerBinding().toInstance(new DailyRewardHandlerSAVInsteadOfCar(dailyRewardDrtInsteadOfPrivateCar, modeToReplaceCarTripsInBrandenburg));
 				
-				this.bind(DrtPassengerTracker.class).asEagerSingleton();
-				this.addEventHandlerBinding().to(DrtPassengerTracker.class);
+				SAVPassengerTrackerImpl tracker = new SAVPassengerTrackerImpl(TransportMode.drt);		
+				this.bind(SAVPassengerTracker.class).toInstance(tracker);
+				this.addEventHandlerBinding().toInstance(tracker);
 			}
 		});
 		

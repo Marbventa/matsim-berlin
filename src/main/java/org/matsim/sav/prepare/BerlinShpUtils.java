@@ -17,7 +17,7 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.prepare;
+package org.matsim.sav.prepare;
 
 import java.util.Collection;
 import java.util.HashMap;

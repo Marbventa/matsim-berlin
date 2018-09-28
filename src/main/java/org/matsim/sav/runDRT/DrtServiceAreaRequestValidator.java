@@ -17,7 +17,7 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.runDRT;
+package org.matsim.sav.runDRT;
 
 import java.util.HashSet;
 import java.util.Set;

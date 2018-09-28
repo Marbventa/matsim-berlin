@@ -17,13 +17,14 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.runTaxi;
+package org.matsim.sav.runTaxi;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.matsim.api.core.v01.Scenario;
+import org.matsim.api.core.v01.TransportMode;
 import org.matsim.contrib.av.robotaxi.scoring.TaxiFareConfigGroup;
 import org.matsim.contrib.av.robotaxi.scoring.TaxiFareHandler;
 import org.matsim.contrib.dvrp.run.DvrpConfigGroup;
@@ -36,6 +37,9 @@ import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryLogging;
 import org.matsim.run.RunBerlinScenario;
+import org.matsim.sav.DailyRewardHandlerSAVInsteadOfCar;
+import org.matsim.sav.SAVPassengerTracker;
+import org.matsim.sav.SAVPassengerTrackerImpl;
 
 /**
  * This class starts a simulation run with taxis. All input files are expected to be accordingly prepared.
@@ -119,9 +123,11 @@ public class RunBerlinTaxiScenario0 {
 		controler.addOverridingModule(new AbstractModule() {
 			@Override
 			public void install() {
-				this.addEventHandlerBinding().toInstance(new DailyRewardHandlerTaxiInsteadOfCar(dailyReward, privateCarMode));			
-				this.bind(TaxiPassengerTracker.class).asEagerSingleton();
-				this.addEventHandlerBinding().to(TaxiPassengerTracker.class);
+				this.addEventHandlerBinding().toInstance(new DailyRewardHandlerSAVInsteadOfCar(dailyReward, privateCarMode));			
+				
+				SAVPassengerTrackerImpl tracker = new SAVPassengerTrackerImpl(TransportMode.drt);		
+				this.bind(SAVPassengerTracker.class).toInstance(tracker);
+				this.addEventHandlerBinding().toInstance(tracker);				
 			}
 		});
 		
