@@ -70,7 +70,7 @@ public class RunBerlinTaxiScenario2 {
 		
 		String configFileName ;
 		String overridingConfigFileName;
-		String drtServiceAreaShapeFile;
+		String serviceAreaShapeFile;
 		double dailyRewardDrtInsteadOfPrivateCar;
 		
 		if (args.length > 0) {
@@ -79,11 +79,11 @@ public class RunBerlinTaxiScenario2 {
 		} else {		
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-taxi2-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
-			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
+			serviceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
 			dailyRewardDrtInsteadOfPrivateCar = 0.;
 		}		
 		
-		new RunBerlinTaxiScenario2( configFileName, overridingConfigFileName, drtServiceAreaShapeFile, dailyRewardDrtInsteadOfPrivateCar).run() ;
+		new RunBerlinTaxiScenario2( configFileName, overridingConfigFileName, serviceAreaShapeFile, dailyRewardDrtInsteadOfPrivateCar).run() ;
 	}
 	
 	public RunBerlinTaxiScenario2( String configFileName, String overridingConfigFileName, String drtServiceAreaShapeFile, double dailyRewardTaxiInsteadOfPrivateCar) {

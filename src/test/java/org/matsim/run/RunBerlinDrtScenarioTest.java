@@ -52,8 +52,8 @@ public class RunBerlinDrtScenarioTest {
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt1-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
 			
-			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin-shp/berlin.shp";
-			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
+			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-berlin/berlin.shp";
+			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-berliner-ring-area/berliner-ring-area.shp";
 
 			transitStopCoordinatesSFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_S-zoneC.csv";
 						
@@ -88,7 +88,7 @@ public class RunBerlinDrtScenarioTest {
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt2-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
 			
-			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
+			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-berliner-ring-area/berliner-ring-area.shp";
 			
 			RunBerlinDrtScenario2 berlin = new RunBerlinDrtScenario2(configFileName, overridingConfigFileName, drtServiceAreaShapeFile, 5.);
 			

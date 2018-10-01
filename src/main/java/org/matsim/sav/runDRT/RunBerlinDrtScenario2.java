@@ -79,7 +79,7 @@ public class RunBerlinDrtScenario2 {
 		} else {		
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt2-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
-			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
+			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
 			dailyRewardDrtInsteadOfPrivateCar = 0.;
 		}		
 		

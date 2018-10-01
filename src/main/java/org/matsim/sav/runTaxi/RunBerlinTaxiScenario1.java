@@ -91,8 +91,8 @@ public class RunBerlinTaxiScenario1 {
 		} else {		
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-taxi1-v5.2-1pct.config.xml"; // berlin 1pct
 			overridingConfigFileName = null;
-			carRestrictedAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/shp-inner-city-area.shp";
-			serviceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/shp-inner-city-area.shp";
+			carRestrictedAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
+			serviceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
 			transitStopCoordinatesSFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_S-ring.csv";
 		}		
 		

@@ -81,7 +81,7 @@ public class RunBerlinDrtScenario1 {
 		
 		String configFileName ;
 		String overridingConfigFileName;
-		String berlinShapeFile;
+		String carRestrictedAreaShapeFile;
 		String drtServiceAreaShapeFile;
 		String transitStopCoordinatesSFile;
 		
@@ -91,12 +91,12 @@ public class RunBerlinDrtScenario1 {
 		} else {		
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt1-v5.2-1pct.config.xml"; // berlin 1pct
 			overridingConfigFileName = null;
-			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin-shp/berlin.shp";
-			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
-			transitStopCoordinatesSFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_S-zoneC.csv";
+			carRestrictedAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
+			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
+			transitStopCoordinatesSFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_S-ring.csv";
 		}		
 		
-		new RunBerlinDrtScenario1( configFileName, overridingConfigFileName, berlinShapeFile, drtServiceAreaShapeFile, transitStopCoordinatesSFile).run() ;
+		new RunBerlinDrtScenario1( configFileName, overridingConfigFileName, carRestrictedAreaShapeFile, drtServiceAreaShapeFile, transitStopCoordinatesSFile).run() ;
 	}
 	
 	public RunBerlinDrtScenario1( String configFileName, String overridingConfigFileName, String carRestrictedAreaShapeFile, String drtServiceAreaShapeFile, String transitStopCoordinatesSFile) {
