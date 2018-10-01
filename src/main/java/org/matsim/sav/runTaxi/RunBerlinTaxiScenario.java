@@ -17,45 +17,38 @@
  *                                                                         *
  * *********************************************************************** */
 
-package org.matsim.sav.runDRT;
+package org.matsim.sav.runTaxi;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.matsim.api.core.v01.Scenario;
-import org.matsim.api.core.v01.TransportMode;
 import org.matsim.contrib.av.robotaxi.scoring.TaxiFareConfigGroup;
 import org.matsim.contrib.av.robotaxi.scoring.TaxiFareHandler;
-import org.matsim.contrib.drt.data.validator.DrtRequestValidator;
-import org.matsim.contrib.drt.routing.DrtRoute;
-import org.matsim.contrib.drt.routing.DrtRouteFactory;
-import org.matsim.contrib.drt.run.DrtConfigGroup;
-import org.matsim.contrib.drt.run.DrtControlerCreator;
 import org.matsim.contrib.dvrp.run.DvrpConfigGroup;
+import org.matsim.contrib.taxi.data.validator.TaxiRequestValidator;
+import org.matsim.contrib.taxi.run.TaxiConfigGroup;
+import org.matsim.contrib.taxi.run.TaxiControlerCreator;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigGroup;
 import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryLogging;
-import org.matsim.core.population.routes.RouteFactories;
 import org.matsim.run.RunBerlinScenario;
-import org.matsim.sav.DailyRewardHandlerSAVInsteadOfCar;
-import org.matsim.sav.SAVPassengerTracker;
-import org.matsim.sav.SAVPassengerTrackerImpl;
 
 /**
- * This class starts a simulation run with DRT. All input files are expected to be accordingly prepared.
+ * This class starts a simulation run with taxis.
  * 
- * 	- The input DRT vehicles file specifies the number of vehicles and the vehicle capacity (a vehicle capacity of 1 means there is no ride-sharing).
- * 	- The DRT service area is specified via the network link attributes.
+ * 	- The input taxi vehicles file specifies the number of vehicles and the vehicle capacity.
+ * 	- The taxi service area is specified via the network link attributes.
  * 
  * @author ikaddoura
  */
 
-public class RunBerlinDrtScenario0 {
+public class RunBerlinTaxiScenario {
 
-	private static final Logger log = Logger.getLogger(RunBerlinDrtScenario0.class);
+	private static final Logger log = Logger.getLogger(RunBerlinTaxiScenario.class);
 	
 	private Config config;
 	private Scenario scenario;
@@ -66,34 +59,8 @@ public class RunBerlinDrtScenario0 {
 	private boolean hasPreparedScenario = false ;
 	private boolean hasPreparedControler = false ;
 	
-	private final double dailyReward;
-	private final String privateCarMode;
-
-	public static void main(String[] args) {
-		
-		String configFileName ;
-		String overridingConfigFileName;
-		double dailyReward;
-		String privateCarMode;
-		
-		if (args.length > 0) {
-			throw new RuntimeException();
-			
-		} else {		
-			configFileName = null;
-			overridingConfigFileName = null;
-			dailyReward = 0.;
-			privateCarMode = null;
-		}		
-		
-		new RunBerlinDrtScenario0( configFileName, overridingConfigFileName, dailyReward, privateCarMode).run() ;
-	}
-	
-	public RunBerlinDrtScenario0( String configFileName, String overridingConfigFileName, double dailyReward, String privateCarMode) {
-				
+	public RunBerlinTaxiScenario( String configFileName, String overridingConfigFileName) {			
 		this.berlin = new RunBerlinScenario( configFileName, overridingConfigFileName);
-		this.dailyReward = dailyReward;
-		this.privateCarMode = privateCarMode;
 	}
 
 	public Controler prepareControler() {
@@ -103,34 +70,22 @@ public class RunBerlinDrtScenario0 {
 		
 		controler = berlin.prepareControler();
 		
-		// drt + dvrp module
-		DrtControlerCreator.addDrtAsSingleDvrpModeToControler(controler);
+		// taxi + dvrp module
+		TaxiControlerCreator.addTaxiAsSingleDvrpModeToControler(controler);
 		
-		// reject drt requests outside the service area
+		// reject taxi requests outside the service area
 		controler.addOverridingModule(new AbstractModule() {	
 			@Override
 			public void install() {
-				this.bind(DrtRequestValidator.class).toInstance(new DrtServiceAreaRequestValidator());
+				this.bind(TaxiRequestValidator.class).toInstance(new TaxiServiceAreaRequestValidator());
 			}
 		});
 		
-		// drt fares
+		// taxi fares
 		controler.addOverridingModule(new AbstractModule() {
 			@Override
 			public void install() {
 				addEventHandlerBinding().to(TaxiFareHandler.class).asEagerSingleton();
-			}
-		});
-		
-		// rewards for no longer owning a car
-		controler.addOverridingModule(new AbstractModule() {
-			@Override
-			public void install() {
-				this.addEventHandlerBinding().toInstance(new DailyRewardHandlerSAVInsteadOfCar(dailyReward, privateCarMode));			
-				
-				SAVPassengerTrackerImpl tracker = new SAVPassengerTrackerImpl(TransportMode.drt);		
-				this.bind(SAVPassengerTracker.class).toInstance(tracker);
-				this.addEventHandlerBinding().toInstance(tracker);
 			}
 		});
 		
@@ -144,10 +99,7 @@ public class RunBerlinDrtScenario0 {
 		}
 		
 		scenario = berlin.prepareScenario();
-			
-		RouteFactories routeFactories = scenario.getPopulation().getFactory().getRouteFactories();
-		routeFactories.setRouteFactory(DrtRoute.class, new DrtRouteFactory());
-
+	
 		hasPreparedScenario = true ;
 		return scenario;
 	}
@@ -158,7 +110,7 @@ public class RunBerlinDrtScenario0 {
 		// dvrp, drt and taxiFare config groups
 		List<ConfigGroup> drtModules = new ArrayList<>();
 		drtModules.add(new DvrpConfigGroup());
-		drtModules.add(new DrtConfigGroup());
+		drtModules.add(new TaxiConfigGroup());
 		drtModules.add(new TaxiFareConfigGroup());
 		
 		List<ConfigGroup> modules = new ArrayList<>();		
@@ -172,7 +124,7 @@ public class RunBerlinDrtScenario0 {
 		ConfigGroup[] modulesArray = new ConfigGroup[modules.size()];
 		config = berlin.prepareConfig(modules.toArray(modulesArray));		
 		
-		DrtControlerCreator.adjustDrtConfig(config);
+		TaxiControlerCreator.adjustTaxiConfig(config);
 		
 		hasPreparedConfig = true ;
 		return config ;

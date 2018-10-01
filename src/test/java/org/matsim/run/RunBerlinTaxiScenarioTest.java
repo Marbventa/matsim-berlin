@@ -25,7 +25,6 @@ import org.matsim.core.config.Config;
 import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
 import org.matsim.core.network.io.NetworkWriter;
 import org.matsim.core.population.io.PopulationWriter;
-import org.matsim.sav.runTaxi.RunBerlinTaxiScenario0;
 import org.matsim.sav.runTaxi.RunBerlinTaxiScenario1;
 import org.matsim.sav.runTaxi.RunBerlinTaxiScenario2;
 import org.matsim.testcases.MatsimTestUtils;
@@ -49,7 +48,6 @@ public class RunBerlinTaxiScenarioTest {
 			String berlinShapeFile;
 			String serviceAreaShapeFile;
 			String transitStopCoordinatesSFile;
-			String transitStopCoordinatesRBFile;
 			
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-taxi1-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
@@ -58,9 +56,8 @@ public class RunBerlinTaxiScenarioTest {
 			serviceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
 
 			transitStopCoordinatesSFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_S-zoneC.csv";
-			transitStopCoordinatesRBFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_RB-zoneC.csv";
 						
-			RunBerlinTaxiScenario1 berlin = new RunBerlinTaxiScenario1(configFileName, overridingConfigFileName, berlinShapeFile, serviceAreaShapeFile, transitStopCoordinatesSFile, transitStopCoordinatesRBFile);
+			RunBerlinTaxiScenario1 berlin = new RunBerlinTaxiScenario1(configFileName, overridingConfigFileName, berlinShapeFile, serviceAreaShapeFile, transitStopCoordinatesSFile);
 			
 			Config config =  berlin.prepareConfig() ;
 			config.plans().setInputFile("../../../test/input/berlin-v5.2-1pct.plans_test-agents.xml");
@@ -86,16 +83,14 @@ public class RunBerlinTaxiScenarioTest {
 			
 			String configFileName ;
 			String overridingConfigFileName;
-			String berlinShapeFile;
 			String serviceAreaShapeFile;
 			
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-taxi2-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
 			
-			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin-shp/berlin.shp";
 			serviceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
 			
-			RunBerlinTaxiScenario2 berlin = new RunBerlinTaxiScenario2(configFileName, overridingConfigFileName, berlinShapeFile, serviceAreaShapeFile, 5.);
+			RunBerlinTaxiScenario2 berlin = new RunBerlinTaxiScenario2(configFileName, overridingConfigFileName, serviceAreaShapeFile, 5.);
 			
 			Config config =  berlin.prepareConfig() ;
 			config.plans().setInputFile("../../../test/input/berlin-v5.2-1pct.plans_test-agents.xml");
@@ -106,34 +101,6 @@ public class RunBerlinTaxiScenarioTest {
 			Scenario scenario = berlin.prepareScenario();
 			new NetworkWriter(scenario.getNetwork()).write(utils.getOutputDirectory() + "taxi-berlin-v5.0.network.xml.gz");
 			new PopulationWriter(scenario.getPopulation()).write(utils.getOutputDirectory() + "taxi-berlin-v5.2-1pct.plans.xml.gz");	
-			
-			berlin.run() ;
-			
-		} catch ( Exception ee ) {
-			throw new RuntimeException(ee) ;
-		}
-	}
-	
-	@Test
-	public final void testTaxiBerlinScenario0() {
-		try {
-			
-			String configFileName ;
-			String overridingConfigFileName;	
-			
-			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-taxi1-v5.2-1pct.config.xml";
-			overridingConfigFileName = null;
-						
-			RunBerlinTaxiScenario0 berlin = new RunBerlinTaxiScenario0(configFileName, overridingConfigFileName, 1000., "car_bb");
-			
-			Config config =  berlin.prepareConfig() ;
-			config.plans().setInputFile("../../../test/input/taxi-berlin-v5.2-1pct.plans_test-agents.xml");
-			config.network().setInputFile("../../../test/input/taxi-berlin-v5.0.network.xml.gz");
-			config.transit().setUseTransit(false); // might lead to a runtime exception if agents switch to pt
-
-			config.controler().setLastIteration(0);
-			config.controler().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
-			config.controler().setOutputDirectory( utils.getOutputDirectory() + "run_output/" );
 			
 			berlin.run() ;
 			

@@ -37,12 +37,22 @@ import com.vividsolutions.jts.geom.Point;
 
 public class BerlinShpUtils {
 
-	private Map<Integer, Geometry> berlinAreaGeometries;
-	private Map<Integer, Geometry> drtServiceAreaGeometries;
+	private Map<Integer, Geometry> carRestrictedAreaGeometries;
+	private Map<Integer, Geometry> serviceAreaGeometries;
 
-	public BerlinShpUtils(String berlinShapeFile, String drtServiceAreaShapeFile) {
-		this.berlinAreaGeometries = loadShapeFile(berlinShapeFile);
-		this.drtServiceAreaGeometries = loadShapeFile(drtServiceAreaShapeFile);
+	public BerlinShpUtils(String carRestrictedAreaShpFile, String drtServiceAreaShapeFile) {
+		
+		if (carRestrictedAreaShpFile != null && carRestrictedAreaShpFile != "" && carRestrictedAreaShpFile != "null" ) {
+			this.carRestrictedAreaGeometries = loadShapeFile(carRestrictedAreaShpFile);
+		}
+		
+		if (drtServiceAreaShapeFile != null && drtServiceAreaShapeFile != "" && drtServiceAreaShapeFile != "null" ) {
+			this.serviceAreaGeometries = loadShapeFile(drtServiceAreaShapeFile);
+		}
+	}
+
+	public BerlinShpUtils(String serviceAreaShapeFile) {
+		this(null, serviceAreaShapeFile);
 	}
 
 	private Map<Integer, Geometry> loadShapeFile(String shapeFile) {
@@ -57,12 +67,12 @@ public class BerlinShpUtils {
 		return geometries;
 	}
 
-	public boolean isCoordInBerlinArea(Coord coord) {
-		return isCoordInArea(coord, berlinAreaGeometries);
+	public boolean isCoordInCarRestrictedArea(Coord coord) {
+		return isCoordInArea(coord, carRestrictedAreaGeometries);
 	}
 
 	public boolean isCoordInDrtServiceArea(Coord coord) {
-		return isCoordInArea(coord, drtServiceAreaGeometries);
+		return isCoordInArea(coord, serviceAreaGeometries);
 	}
 
 	private boolean isCoordInArea(Coord coord, Map<Integer, Geometry> areaGeometries) {

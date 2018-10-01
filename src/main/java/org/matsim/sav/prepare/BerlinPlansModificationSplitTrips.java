@@ -53,7 +53,6 @@ public class BerlinPlansModificationSplitTrips {
 	private static final Logger log = Logger.getLogger(BerlinPlansModificationSplitTrips.class);
 	
 	private final List<Coord> prCoordinatesS;
-	private final List<Coord> prCoordinatesRB;
 	private final BerlinShpUtils shpUtils;
 
 	private final String inputPersonAttributesSubpopulationPerson;
@@ -65,12 +64,10 @@ public class BerlinPlansModificationSplitTrips {
 	private final String parkAndRideActivity;
 	private final double parkAndRideDuration;
 	private final boolean splitTripsS;
-	private final boolean splitTripsRB;
 	private final boolean splitTripsTaxi;
 
 	public BerlinPlansModificationSplitTrips(
 			String transitStopCoordinatesSFile,
-			String transitStopCoordinatesRBFile,
 			BerlinShpUtils shpUtils,
 			String inputPersonAttributesSubpopulationPerson,
 			String modeToReplaceCarTripsInBerlin,
@@ -80,11 +77,9 @@ public class BerlinPlansModificationSplitTrips {
 			String parkAndRideActivity,
 			double parkAndRideDuration,
 			boolean splitTripsS,
-			boolean splitTripsRB,
 			boolean splitTripsTaxi) {
 		
 		this.prCoordinatesS = readCSVFile(transitStopCoordinatesSFile);
-		this.prCoordinatesRB = readCSVFile(transitStopCoordinatesRBFile);
 		this.shpUtils = shpUtils;
 		
 		this.inputPersonAttributesSubpopulationPerson = inputPersonAttributesSubpopulationPerson;
@@ -95,7 +90,6 @@ public class BerlinPlansModificationSplitTrips {
 		this.parkAndRideActivity = parkAndRideActivity;
 		this.parkAndRideDuration = parkAndRideDuration;
 		this.splitTripsS = splitTripsS;
-		this.splitTripsRB = splitTripsRB;
 		this.splitTripsTaxi = splitTripsTaxi;
 	}
 
@@ -144,13 +138,11 @@ public class BerlinPlansModificationSplitTrips {
 
 				Plan directTripPlan = factory.createPlan(); // direct trips
 				Plan splitTripPlanPT1 = factory.createPlan(); // with split car trips (car + S)
-				Plan splitTripPlanPT2 = factory.createPlan(); // with split car trips (car + RB)
 				Plan splitTripPlanCar = factory.createPlan(); // with split car trips (car + DRT)
 
 				// add first activity
 				directTripPlan.addActivity((Activity) person.getSelectedPlan().getPlanElements().get(0));
 				splitTripPlanPT1.addActivity((Activity) person.getSelectedPlan().getPlanElements().get(0));
-				splitTripPlanPT2.addActivity((Activity) person.getSelectedPlan().getPlanElements().get(0));
 				splitTripPlanCar.addActivity((Activity) person.getSelectedPlan().getPlanElements().get(0));
 
 				for (Trip trip : TripStructureUtils.getTrips(person.getSelectedPlan().getPlanElements(),
@@ -164,9 +156,9 @@ public class BerlinPlansModificationSplitTrips {
 						
 						tripsCar++;
 						
-						if (shpUtils.isCoordInBerlinArea(trip.getOriginActivity().getCoord())
-								&& shpUtils.isCoordInBerlinArea(trip.getDestinationActivity().getCoord())) {
-							// berlin --> berlin
+						if (shpUtils.isCoordInCarRestrictedArea(trip.getOriginActivity().getCoord())
+								&& shpUtils.isCoordInCarRestrictedArea(trip.getDestinationActivity().getCoord())) {
+							// car-restricted area --> car-restricted area
 							tripsBERtoBER++;
 
 							String berlinTripMode = modeToReplaceCarTripsInBerlin;
@@ -177,15 +169,12 @@ public class BerlinPlansModificationSplitTrips {
 							splitTripPlanPT1.addLeg(factory.createLeg(berlinTripMode));
 							splitTripPlanPT1.addActivity(trip.getDestinationActivity());
 
-							splitTripPlanPT2.addLeg(factory.createLeg(berlinTripMode));
-							splitTripPlanPT2.addActivity(trip.getDestinationActivity());
-
 							splitTripPlanCar.addLeg(factory.createLeg(berlinTripMode));
 							splitTripPlanCar.addActivity(trip.getDestinationActivity());
 
-						} else if (shpUtils.isCoordInBerlinArea(trip.getOriginActivity().getCoord())
-								&& !shpUtils.isCoordInBerlinArea(trip.getDestinationActivity().getCoord())) {
-							// berlin --> brandenburg
+						} else if (shpUtils.isCoordInCarRestrictedArea(trip.getOriginActivity().getCoord())
+								&& !shpUtils.isCoordInCarRestrictedArea(trip.getDestinationActivity().getCoord())) {
+							// car-restricted area --> brandenburg
 							tripsBERtoBB++;
 
 							// only split trips for former car trips
@@ -199,13 +188,6 @@ public class BerlinPlansModificationSplitTrips {
 							splitTripPlanPT1.addLeg(factory.createLeg(modeToReplaceCarTripsInBrandenburg));
 							splitTripPlanPT1.addActivity(trip.getDestinationActivity());
 
-							splitTripPlanPT2.addLeg(factory.createLeg(modeToReplaceCarTripsToFromBerlin));
-							Activity prActivity2 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesRB));
-							prActivity2.setMaximumDuration(parkAndRideDuration);
-							splitTripPlanPT2.addActivity(prActivity2);
-							splitTripPlanPT2.addLeg(factory.createLeg(modeToReplaceCarTripsInBrandenburg));
-							splitTripPlanPT2.addActivity(trip.getDestinationActivity());
-
 							splitTripPlanCar.addLeg(factory.createLeg(modeToReplaceCarTripsInBerlin));
 							Coord firstCarLink = getFirstCarLinkFromPreviousRoute(trip, scenario.getNetwork());
 							if (firstCarLink != null) {
@@ -218,9 +200,9 @@ public class BerlinPlansModificationSplitTrips {
 							}
 							splitTripPlanCar.addActivity(trip.getDestinationActivity());
 
-						} else if (!shpUtils.isCoordInBerlinArea(trip.getOriginActivity().getCoord())
-								&& shpUtils.isCoordInBerlinArea(trip.getDestinationActivity().getCoord())) {
-							// brandenburg --> berlin
+						} else if (!shpUtils.isCoordInCarRestrictedArea(trip.getOriginActivity().getCoord())
+								&& shpUtils.isCoordInCarRestrictedArea(trip.getDestinationActivity().getCoord())) {
+							// brandenburg --> car-restricted area
 							tripsBBtoBER++;
 
 							directTripPlan.addLeg(factory.createLeg(modeToReplaceCarTripsToFromBerlin));
@@ -232,13 +214,6 @@ public class BerlinPlansModificationSplitTrips {
 							splitTripPlanPT1.addActivity(prActivity1);
 							splitTripPlanPT1.addLeg(factory.createLeg(modeToReplaceCarTripsToFromBerlin));
 							splitTripPlanPT1.addActivity(trip.getDestinationActivity());
-
-							splitTripPlanPT2.addLeg(factory.createLeg(modeToReplaceCarTripsInBrandenburg));
-							Activity prActivity2 = factory.createActivityFromCoord(parkAndRideActivity, getNearestCoord(trip.getOriginActivity().getCoord(), prCoordinatesRB));
-							prActivity2.setMaximumDuration(parkAndRideDuration);
-							splitTripPlanPT2.addActivity(prActivity2);
-							splitTripPlanPT2.addLeg(factory.createLeg(modeToReplaceCarTripsToFromBerlin));
-							splitTripPlanPT2.addActivity(trip.getDestinationActivity());
 
 							Coord lastCarLink = getLastCarLinkFromPreviousRoute(trip, scenario.getNetwork());
 							if (lastCarLink != null) {
@@ -252,8 +227,8 @@ public class BerlinPlansModificationSplitTrips {
 							splitTripPlanCar.addLeg(factory.createLeg(modeToReplaceCarTripsInBerlin));
 							splitTripPlanCar.addActivity(trip.getDestinationActivity());
 							
-						} else if (!shpUtils.isCoordInBerlinArea(trip.getOriginActivity().getCoord())
-								&& !shpUtils.isCoordInBerlinArea(trip.getDestinationActivity().getCoord())) {
+						} else if (!shpUtils.isCoordInCarRestrictedArea(trip.getOriginActivity().getCoord())
+								&& !shpUtils.isCoordInCarRestrictedArea(trip.getDestinationActivity().getCoord())) {
 							// brandenburg --> brandenburg
 							tripsBBtoBB++;
 							
@@ -262,9 +237,6 @@ public class BerlinPlansModificationSplitTrips {
 
 							splitTripPlanPT1.addLeg(factory.createLeg(modeToReplaceCarTripsInBrandenburg));
 							splitTripPlanPT1.addActivity(trip.getDestinationActivity());
-
-							splitTripPlanPT2.addLeg(factory.createLeg(modeToReplaceCarTripsInBrandenburg));
-							splitTripPlanPT2.addActivity(trip.getDestinationActivity());
 
 							splitTripPlanCar.addLeg(factory.createLeg(modeToReplaceCarTripsInBrandenburg));
 							splitTripPlanCar.addActivity(trip.getDestinationActivity());
@@ -281,9 +253,6 @@ public class BerlinPlansModificationSplitTrips {
 						splitTripPlanPT1.addLeg(factory.createLeg(mainMode));
 						splitTripPlanPT1.addActivity(trip.getDestinationActivity());
 
-						splitTripPlanPT2.addLeg(factory.createLeg(mainMode));
-						splitTripPlanPT2.addActivity(trip.getDestinationActivity());
-
 						splitTripPlanCar.addLeg(factory.createLeg(mainMode));
 						splitTripPlanCar.addActivity(trip.getDestinationActivity());
 					}
@@ -293,8 +262,6 @@ public class BerlinPlansModificationSplitTrips {
 
 				if (splitTripsS)
 					person.addPlan(splitTripPlanPT1);
-				if (splitTripsRB)
-					person.addPlan(splitTripPlanPT2);
 				if (splitTripsTaxi)
 					person.addPlan(splitTripPlanCar);
 				person.addPlan(directTripPlan);
@@ -302,10 +269,10 @@ public class BerlinPlansModificationSplitTrips {
 		}
 		log.info("Adjusting plans... Done.");
 
-		log.info("Car trips BB to BER: " + tripsBBtoBER);
-		log.info("Car trips BER to BB: " + tripsBERtoBB);
+		log.info("Car trips BB to Car-restricted area: " + tripsBBtoBER);
+		log.info("Car trips Car-restricted area to BB: " + tripsBERtoBB);
 		log.info("Car trips BB to BB: " + tripsBBtoBB);
-		log.info("Car trips BER to BER: " + tripsBERtoBER);
+		log.info("Car trips Car-restricted area to Car-restricted area: " + tripsBERtoBER);
 		log.info("Car trips TOTAL: " + tripsCar);
 		log.info("Trips TOTAL: " + tripsTotal);
 	}
