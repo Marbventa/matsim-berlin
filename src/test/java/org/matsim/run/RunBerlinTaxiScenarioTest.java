@@ -37,7 +37,6 @@ public class RunBerlinTaxiScenarioTest {
 	
 	@Rule public MatsimTestUtils utils = new MatsimTestUtils() ;
 	
-
 	// private car mode not allowed in berlin
 	@Test
 	public final void testTaxiBerlinScenario1() {
