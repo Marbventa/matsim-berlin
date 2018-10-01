@@ -45,19 +45,19 @@ public class RunBerlinTaxiScenarioTest {
 			
 			String configFileName ;
 			String overridingConfigFileName;
-			String berlinShapeFile;
+			String carRestrictedAreaShapeFile;
 			String serviceAreaShapeFile;
 			String transitStopCoordinatesSFile;
 			
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-taxi1-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
 			
-			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/berlin-shp/berlin.shp";
-			serviceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
+			carRestrictedAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
+			serviceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
 
-			transitStopCoordinatesSFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_S-zoneC.csv";
+			transitStopCoordinatesSFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_S-ring.csv";
 						
-			RunBerlinTaxiScenario1 berlin = new RunBerlinTaxiScenario1(configFileName, overridingConfigFileName, berlinShapeFile, serviceAreaShapeFile, transitStopCoordinatesSFile);
+			RunBerlinTaxiScenario1 berlin = new RunBerlinTaxiScenario1(configFileName, overridingConfigFileName, carRestrictedAreaShapeFile, serviceAreaShapeFile, transitStopCoordinatesSFile);
 			
 			Config config =  berlin.prepareConfig() ;
 			config.plans().setInputFile("../../../test/input/berlin-v5.2-1pct.plans_test-agents.xml");
@@ -88,7 +88,7 @@ public class RunBerlinTaxiScenarioTest {
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-taxi2-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
 			
-			serviceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/berliner-ring-area-shp/service-area.shp";
+			serviceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp.shp";
 			
 			RunBerlinTaxiScenario2 berlin = new RunBerlinTaxiScenario2(configFileName, overridingConfigFileName, serviceAreaShapeFile, 5.);
 			

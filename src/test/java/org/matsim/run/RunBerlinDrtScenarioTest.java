@@ -45,19 +45,19 @@ public class RunBerlinDrtScenarioTest {
 			
 			String configFileName ;
 			String overridingConfigFileName;
-			String berlinShapeFile;
+			String carRestrictedAreaShapeFile;
 			String drtServiceAreaShapeFile;
 			String transitStopCoordinatesSFile;
 			
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt1-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
 			
-			berlinShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-berlin/berlin.shp";
-			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-berliner-ring-area/berliner-ring-area.shp";
+			carRestrictedAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
+			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
 
-			transitStopCoordinatesSFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_S-zoneC.csv";
+			transitStopCoordinatesSFile = "scenarios/berlin-v5.2-10pct/input/berlin-v5.2.transit-stop-coordinates_S-ring.csv";
 						
-			RunBerlinDrtScenario1 berlin = new RunBerlinDrtScenario1(configFileName, overridingConfigFileName, berlinShapeFile, drtServiceAreaShapeFile, transitStopCoordinatesSFile);
+			RunBerlinDrtScenario1 berlin = new RunBerlinDrtScenario1(configFileName, overridingConfigFileName, carRestrictedAreaShapeFile, drtServiceAreaShapeFile, transitStopCoordinatesSFile);
 			
 			Config config =  berlin.prepareConfig() ;
 			config.plans().setInputFile("../../../test/input/berlin-v5.2-1pct.plans_test-agents.xml");
@@ -88,13 +88,13 @@ public class RunBerlinDrtScenarioTest {
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-drt2-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
 			
-			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-berliner-ring-area/berliner-ring-area.shp";
+			drtServiceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
 			
 			RunBerlinDrtScenario2 berlin = new RunBerlinDrtScenario2(configFileName, overridingConfigFileName, drtServiceAreaShapeFile, 5.);
 			
 			Config config =  berlin.prepareConfig() ;
 			config.plans().setInputFile("../../../test/input/berlin-v5.2-1pct.plans_test-agents.xml");
-			config.controler().setLastIteration(5);
+			config.controler().setLastIteration(1);
 			config.controler().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
 			config.controler().setOutputDirectory( utils.getOutputDirectory() + "run_output/" );
 			
