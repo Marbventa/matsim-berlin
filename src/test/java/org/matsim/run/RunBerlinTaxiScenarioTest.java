@@ -87,7 +87,7 @@ public class RunBerlinTaxiScenarioTest {
 			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-taxi2-v5.2-1pct.config.xml";
 			overridingConfigFileName = null;
 			
-			serviceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp.shp";
+			serviceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
 			
 			RunBerlinTaxiScenario2 berlin = new RunBerlinTaxiScenario2(configFileName, overridingConfigFileName, serviceAreaShapeFile, 5.);
 			
