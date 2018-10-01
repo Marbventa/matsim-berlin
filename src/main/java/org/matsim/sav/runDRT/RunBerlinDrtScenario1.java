@@ -40,7 +40,7 @@ import org.matsim.sav.prepare.BerlinShpUtils;
  * 	- The private car mode is no longer allowed in the inner-city area (see input shape file) and may only be used for trips outside the inner-city area (network mode: 'car_bb').
  * 	- Initial plans are modified in the following way:
  * 		- Car trips within the Berlin area are replaced by DRT trips.
- * 		- Car trips from Brandenburg to Berlin or the other way round are replaced by 4 alternatives: a direct pt trip and 3 park-and-ride trips (car_bb + S / RB / DRT) 
+ * 		- Car trips from Brandenburg to Berlin or the other way round are replaced by 4 alternatives: a direct pt trip and 2 park-and-ride trips (car_bb + S / car_bb + DRT) 
  * 
  * @author ikaddoura
  */
