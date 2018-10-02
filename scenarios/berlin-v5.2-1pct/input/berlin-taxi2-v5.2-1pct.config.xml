@@ -150,9 +150,9 @@
 				<param name="mode" value="taxi" />
 			</parameterset>
 			<parameterset type="modeParams" >
-				<param name="mode" value="car" />
 				<param name="constant" value="-1.5" />
 				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
+				<param name="mode" value="car" />
 				<param name="monetaryDistanceRate" value="-0.0002" />
 			</parameterset>
 			<parameterset type="activityParams" >
@@ -190,7 +190,7 @@
 		<!-- Typically, 120 seconds -->
 		<param name="pickupDuration" value="120.0" />
 		<!-- An XML file specifying the taxi fleet. The file format according to dvrp_vehicles_v1.dtd -->
-		<param name="taxisFile" value="../../berlin-v5.2-10pct/input/berlin-v5.2.taxi-vehicles_1000.xml.gz" />
+		<param name="taxisFile" value="../../berlin-v5.2-10pct/input/berlin-v5.2.taxi-vehicles_150.xml.gz" />
 		<!-- If true, writes time profiles of vehicle statuses (i.e. current task type) and the number of unplanned requests are written to a text file (taxi_status_time_profiles) and saved as plots. False by default. -->
 		<param name="timeProfiles" value="true" />
 		<!-- If true, vehicles can be diverted during empty trips. Requires online tracking. False by default. -->

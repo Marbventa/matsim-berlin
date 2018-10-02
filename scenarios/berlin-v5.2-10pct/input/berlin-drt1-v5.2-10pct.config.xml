@@ -150,8 +150,7 @@
 				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
 				<param name="mode" value="egress_walk" />
 			</parameterset>
-			
-			<parameterset type="modeParams">
+			<parameterset type="modeParams" >
 				<param name="marginalUtilityOfTraveling_util_hr" value="1.8" />
 				<param name="mode" value="drt" />
 				<param name="monetaryDistanceRate" value="0.0" />
@@ -168,14 +167,8 @@
 				<param name="mode" value="car_bb" />
 				<param name="monetaryDistanceRate" value="-0.0002" />
 			</parameterset>
-			
 			<parameterset type="activityParams" >
 				<param name="activityType" value="park-and-ride" />
-				<param name="closingTime" value="undefined" />
-				<param name="earliestEndTime" value="undefined" />
-				<param name="latestStartTime" value="undefined" />
-				<param name="minimalDuration" value="undefined" />
-				<param name="openingTime" value="undefined" />
 				<param name="priority" value="1.0" />
 				<param name="scoringThisActivityAtAll" value="false" />
 				<param name="typicalDuration" value="00:01:00" />
@@ -189,7 +182,7 @@
 		<!-- Mode which will be handled by PassengerEngine and VrpOptimizer (passengers'/customers' perspective) -->
 		<param name="mode" value="drt" />
 		<!-- If true, the startLink is changed to last link in the current schedule, so the taxi starts the next day at the link where it stopped operating the day before. False by default. -->
-		<param name="changeStartLinkToLastLinkInSchedule" value="false" />
+		<param name="changeStartLinkToLastLinkInSchedule" value="true" />
 		<!-- Beeline distance factor for DRT. Used in analyis and in plans file. The default value is 1.3. -->
 		<param name="estimatedBeelineDistanceFactor" value="1.3" />
 		<!-- Beeline-speed estimate for DRT. Used in analysis, optimisation constraints and in plans file, [m/s]. The default value is 25 km/h -->
@@ -217,7 +210,7 @@
 		<!-- Stop locations file (transit schedule format, but without lines) for DRT stops. Used only for the stopbased mode -->
 		<param name="transitStopFile" value="null" />
 		<!-- An XML file specifying the vehicle fleet. The file format according to dvrp_vehicles_v1.dtd -->
-		<param name="vehiclesFile" value="berlin-v5.2.taxi-vehicles_10000.xml.gz" />
+		<param name="vehiclesFile" value="berlin-v5.2.taxi-vehicles_1500.xml.gz" />
 		<!-- Writes out detailed DRT customer stats in each iteration. True by default. -->
 		<param name="writeDetailedCustomerStats" value="true" />
 		<parameterset type="minCostFlowRebalancing" >
@@ -245,7 +238,7 @@
 		<param name="travelTimeEstimationBeta" value="0.0" />
 	</module>
 	
-	<module name="taxifare">
+	<module name="taxifare" >
 		<!-- Basefare per Trip (fare = positive value) -->
 		<param name="basefare" value="0.0" />
 		<!-- Daily subscription fee (fee = positive value) -->

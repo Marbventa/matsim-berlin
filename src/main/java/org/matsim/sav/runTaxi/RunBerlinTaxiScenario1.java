@@ -89,7 +89,7 @@ public class RunBerlinTaxiScenario1 {
 			throw new RuntimeException();
 			
 		} else {		
-			configFileName = "scenarios/berlin-v5.2-1pct/input/berlin-taxi1-v5.2-1pct.config.xml"; // berlin 1pct
+			configFileName = "scenarios/berlin-v5.2-10pct/input/berlin-taxi1-v5.2-10pct.config.xml"; // berlin 1pct
 			overridingConfigFileName = null;
 			carRestrictedAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";
 			serviceAreaShapeFile = "scenarios/berlin-v5.2-10pct/input/shp-inner-city-area/inner-city-area.shp";

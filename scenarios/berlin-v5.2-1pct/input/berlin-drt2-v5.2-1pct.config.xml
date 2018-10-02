@@ -155,9 +155,9 @@
 				<param name="mode" value="drt" />
 			</parameterset>
 			<parameterset type="modeParams" >
-				<param name="mode" value="car" />
 				<param name="constant" value="-1.5" />
 				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
+				<param name="mode" value="car" />
 				<param name="monetaryDistanceRate" value="-0.0002" />
 			</parameterset>
 			<parameterset type="activityParams" >
@@ -201,7 +201,7 @@
 		<!-- Stop locations file (transit schedule format, but without lines) for DRT stops. Used only for the stopbased mode -->
 		<param name="transitStopFile" value="null" />
 		<!-- An XML file specifying the vehicle fleet. The file format according to dvrp_vehicles_v1.dtd -->
-		<param name="vehiclesFile" value="../../berlin-v5.2-10pct/input/berlin-v5.2.taxi-vehicles_1000.xml.gz" />
+		<param name="vehiclesFile" value="../../berlin-v5.2-10pct/input/berlin-v5.2.taxi-vehicles_150.xml.gz" />
 		<!-- Writes out detailed DRT customer stats in each iteration. True by default. -->
 		<param name="writeDetailedCustomerStats" value="true" />
 		<parameterset type="minCostFlowRebalancing" >
