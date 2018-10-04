@@ -60,7 +60,7 @@ public class RunBerlinTaxiScenarioTest {
 			
 			Config config =  berlin.prepareConfig() ;
 			config.plans().setInputFile("../../../test/input/berlin-v5.2-1pct.plans_test-agents.xml");
-			config.controler().setLastIteration(0);
+			config.controler().setLastIteration(2);
 			config.controler().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
 			config.controler().setOutputDirectory( utils.getOutputDirectory() + "run_output/" );
 			

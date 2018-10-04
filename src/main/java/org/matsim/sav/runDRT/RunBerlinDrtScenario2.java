@@ -19,6 +19,9 @@
 
 package org.matsim.sav.runDRT;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.TransportMode;
@@ -27,12 +30,24 @@ import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigGroup;
 import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
+import org.matsim.core.replanning.PlanStrategy;
+import org.matsim.core.replanning.PlanStrategyImpl.Builder;
+import org.matsim.core.replanning.modules.ReRoute;
+import org.matsim.core.replanning.modules.SubtourModeChoice;
+import org.matsim.core.replanning.selectors.RandomPlanSelector;
+import org.matsim.core.router.StageActivityTypes;
+import org.matsim.core.router.StageActivityTypesImpl;
+import org.matsim.core.router.TripRouter;
 import org.matsim.sav.DailyRewardHandlerSAVInsteadOfCar;
 import org.matsim.sav.SAVPassengerTracker;
 import org.matsim.sav.SAVPassengerTrackerImpl;
 import org.matsim.sav.prepare.BerlinNetworkModification;
 import org.matsim.sav.prepare.BerlinPlansModificationTagFormerCarUsers;
 import org.matsim.sav.prepare.BerlinShpUtils;
+import org.matsim.sav.prepare.PersonAttributesModification;
+
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * This class starts a simulation run with DRT.
@@ -48,6 +63,7 @@ import org.matsim.sav.prepare.BerlinShpUtils;
 public class RunBerlinDrtScenario2 {
 
 	private static final Logger log = Logger.getLogger(RunBerlinDrtScenario2.class);
+	private final StageActivityTypes stageActivities = new StageActivityTypesImpl("pt interaction", "car interaction", "ride interaction");
 
 	static final String drtServiceAreaAttribute = "drtServiceArea";
 	public static final String modeToReplaceCarTripsInBrandenburg = TransportMode.car;
@@ -114,6 +130,45 @@ public class RunBerlinDrtScenario2 {
 			});
 		}
 		
+		// different modes for different subpopulations
+		controler.addOverridingModule(new AbstractModule() {
+			
+			@Override
+			public void install() {
+				
+				final Provider<TripRouter> tripRouterProvider = binder().getProvider(TripRouter.class);
+				
+				List<String> availableModesArrayList = new ArrayList<>();
+				availableModesArrayList.add("bicycle");
+				availableModesArrayList.add("pt");
+				availableModesArrayList.add("walk");
+				availableModesArrayList.add(modeToReplaceCarTripsInBrandenburg);
+				
+				final String[] availableModes = availableModesArrayList.toArray(new String[availableModesArrayList.size()]);
+				
+				addPlanStrategyBinding("SubtourModeChoice_no-potential-sav-user").toProvider(new Provider<PlanStrategy>() {
+										
+					@Inject
+					Scenario sc;
+
+					@Override
+					public PlanStrategy get() {
+						
+						log.info("SubtourModeChoice_no-potential-sav-user" + " - available modes: " + availableModes.toString());
+						final String[] chainBasedModes = {modeToReplaceCarTripsInBrandenburg, "bicycle"};
+
+						final Builder builder = new Builder(new RandomPlanSelector<>());
+						builder.addStrategyModule(new SubtourModeChoice(sc.getConfig()
+								.global()
+								.getNumberOfThreads(), availableModes, chainBasedModes, false, 
+								0.5, tripRouterProvider));
+						builder.addStrategyModule(new ReRoute(sc, tripRouterProvider));
+						return builder.build();
+					}
+				});			
+			}
+		});
+		
 		hasPreparedControler = true ;
 		return controler;
 	}
@@ -128,7 +183,8 @@ public class RunBerlinDrtScenario2 {
 		BerlinShpUtils shpUtils = new BerlinShpUtils(drtServiceAreaShapeFile);
 		new BerlinNetworkModification(shpUtils).addSAVmode(scenario, taxiNetworkMode, drtServiceAreaAttribute);
 		new BerlinPlansModificationTagFormerCarUsers().run(scenario);
-		
+		new PersonAttributesModification(shpUtils, stageActivities).run(scenario);
+
 		hasPreparedScenario = true ;
 		return scenario;
 	}
