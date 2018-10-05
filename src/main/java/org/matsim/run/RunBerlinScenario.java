@@ -82,13 +82,19 @@ public class RunBerlinScenario {
 		
 		controler = new Controler( scenario );
 		
-		// use the sbb pt raptor router
-		controler.addOverridingModule( new AbstractModule() {
-			@Override
-			public void install() {
-				install( new SwissRailRaptorModule() );
-			}
-		} );
+		if (controler.getConfig().transit().isUsingTransitInMobsim()) {
+			// use the sbb pt raptor router
+			controler.addOverridingModule( new AbstractModule() {
+				@Override
+				public void install() {
+					install( new SwissRailRaptorModule() );
+				}
+			} );
+		} else {
+			log.warn("Public transit will be teleported and not simulated in the mobsim! "
+					+ "This will have a significant effect on pt-related parameters (travel times, modal split, and so on). "
+					+ "Should only be used for testing or car-focused studies with fixed modal split.  ");
+		}
 		
 		// use the (congested) car travel time for the teleported ride mode
 		controler.addOverridingModule( new AbstractModule() {
