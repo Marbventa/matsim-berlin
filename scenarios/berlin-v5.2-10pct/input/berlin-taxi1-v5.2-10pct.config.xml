@@ -189,21 +189,17 @@
 				<param name="activityType" value="park-and-ride" />
 				<param name="priority" value="1.0" />
 				<param name="scoringThisActivityAtAll" value="false" />
-				<param name="typicalDuration" value="00:01:00" />
-				<param name="typicalDurationScoreComputation" value="relative" />
 			</parameterset>
 			<parameterset type="activityParams" >
 				<param name="activityType" value="taxi interaction" />
 				<param name="scoringThisActivityAtAll" value="false" />
-				<param name="typicalDuration" value="00:01:00" />
-				<param name="typicalDurationScoreComputation" value="relative" />
 			</parameterset>		
 		</parameterset>
 	</module>
 	
 	<module name="taxi" >
 		<!-- Used in AStarEuclidean for shortest path search for occupied drives. Default value is 1.0. Values above 1.0 (typically, 1.5 to 3.0) speed up search, but at the cost of obtaining longer paths -->
-		<param name="AStarEuclideanOverdoFactor" value="1.0" />
+		<param name="AStarEuclideanOverdoFactor" value="1.5" />
 		<!-- Specifies whether the simulation should interrupt if not all requests were performed when an interation ends. Otherwise, a warning is given. True by default. -->
 		<param name="breakIfNotAllRequestsServed" value="false" />
 		<!-- If true, the startLink is changed to last link in the current schedule, so the taxi starts the next day at the link where it stopped operating the day before. False by default. -->
@@ -211,8 +207,8 @@
 		<!-- If false, the drop-off location remains unknown to the optimizer and scheduler until the end of pickup. False by default. -->
 		<param name="destinationKnown" value="false" />
 		<!-- If true, detailed hourly taxi stats are dumped after each iteration. False by default. -->
-		<param name="detailedStats" value="true" />
-		<param name="plotDetailedWarnings" value="true" />
+		<param name="detailedStats" value="false" />
+		<param name="plotDetailedWarnings" value="false" />
 		<!-- Typically, 60 seconds -->
 		<param name="dropoffDuration" value="60.0" />
 		<!-- Mode which will be handled by PassengerEngine and VrpOptimizer (passengers'/customers' perspective) -->
@@ -231,8 +227,8 @@
 			<param name="cellSize" value="1000" />
 			<param name="goal" value="DEMAND_SUPPLY_EQUIL" />
 			<param name="id" value="example" />
-			<param name="nearestRequestsLimit" value="99999" />
-			<param name="nearestVehiclesLimit" value="99999" />
+			<param name="nearestRequestsLimit" value="20" />
+			<param name="nearestVehiclesLimit" value="20" />
 			<param name="type" value="RULE_BASED" />
 		</parameterset>
 	</module>
