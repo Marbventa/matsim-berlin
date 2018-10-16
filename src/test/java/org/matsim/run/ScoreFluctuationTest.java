@@ -26,27 +26,22 @@ public class ScoreFluctuationTest {
     public void testFluctuatuingScore() {
 
         //Score:  114.73387586329103 from ihab calculated score, no sample
-        //run fractionOfIteration 1 lastIteration(3)
-        //Score1: 114.65161732321907
-        //Score2: 114.65161732321907
 
-        //run fractionOfIteration 1 lastIteration(1)
-        //Score1: 114.65161732321907
-        //Score2: 114.65161732321907
+        //run fractionOfIteration(1) lastIteration(1)
+        //Score1: 113.75741996255046
+        //Score2: 113.75742175860532
 
-        //run1 no sample lastIteration(1)
-        //Score1: 114.65161732321907
-        //Score2: 114.65161732321907
+        //run fractionOfIteration(1) lastIteration(1) numberOfThreads(1)
+        //Score1: 113.80144702530018
+        //Score2: 113.8014470331611
 
-        //run1 no sample lastIteration(0)
-        //Score:  114.65161732321907 first calculated score, no sample
-        //run2
-        //Score1: 114.65161732321907 no sample
-        //Score2: 114.65161732321907 no sample
+        //run fractionOfIteration(1) lastIteration(1) numberOfThreads(1) plans_noPt
+        //Score1: 111.8452974103275
+        //Score2: 111.8452974103275
 
-        //run1 with sample 0.01
-        //Score1: 115.6444324032385 sample 0.01
-        //Score2: 115.6444324032385 sample 0.01
+        //run fractionOfIteration(1) lastIteration(1) numberOfThreads(6) plans_noPt
+        //Score1: 111.81562881445556
+        //Score2: 111.81562881445556
 
         double score1 = run1pctAndReturnScore();
         double score2 = run1pctAndReturnScore();
@@ -62,8 +57,10 @@ public class ScoreFluctuationTest {
             String configFilename = "scenarios/berlin-v5.2-1pct/input/berlin-v5.2-1pct.config.xml";
             RunBerlinScenario berlin = new RunBerlinScenario( configFilename, "overridingConfig.xml" ) ;
 
-            Config config =  berlin.prepareConfig() ;
-            config.controler().setLastIteration(3);
+            Config config =  berlin.prepareConfig();
+            int lastIteration = 1;
+            config.controler().setLastIteration(lastIteration);
+            config.global().setNumberOfThreads(6);
             config.strategy().setFractionOfIterationsToDisableInnovation(1);//to enable innovative strategies
             config.controler().setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
             config.controler().setOutputDirectory( utils.getOutputDirectory() );
@@ -73,7 +70,7 @@ public class ScoreFluctuationTest {
 
             berlin.run() ;
 
-            return berlin.getScoreStats().getScoreHistory().get(ScoreStatsControlerListener.ScoreItem.average).get(0);
+            return berlin.getScoreStats().getScoreHistory().get(ScoreStatsControlerListener.ScoreItem.average).get(lastIteration);
 
         } catch ( Exception ee ) {
             throw new RuntimeException(ee) ;
