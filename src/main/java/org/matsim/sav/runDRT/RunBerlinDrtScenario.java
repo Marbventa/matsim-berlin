@@ -117,7 +117,7 @@ public class RunBerlinDrtScenario {
 		List<ConfigGroup> drtModules = new ArrayList<>();
 		drtModules.add(new DvrpConfigGroup());
 		drtModules.add(new DrtConfigGroup());
-		drtModules.add(new TaxiFareConfigGroup());
+		// TODO: Add drt-specific fare module
 		
 		List<ConfigGroup> modules = new ArrayList<>();		
 		for (ConfigGroup module : drtModules) {
