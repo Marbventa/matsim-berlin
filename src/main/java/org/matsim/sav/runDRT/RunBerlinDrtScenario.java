@@ -84,13 +84,13 @@ public class RunBerlinDrtScenario {
 			}
 		});
 		
-		// drt fares
-		controler.addOverridingModule(new AbstractModule() {
-			@Override
-			public void install() {
-				addEventHandlerBinding().to(TaxiFareHandler.class).asEagerSingleton();
-			}
-		});
+		// TODO: Add drt-specific fare module
+//		controler.addOverridingModule(new AbstractModule() {
+//			@Override
+//			public void install() {
+//				addEventHandlerBinding().to(TaxiFareHandler.class).asEagerSingleton();
+//			}
+//		});
 		
 		hasPreparedControler = true ;
 		return controler;
@@ -113,11 +113,11 @@ public class RunBerlinDrtScenario {
 	public Config prepareConfig(ConfigGroup... modulesToAdd) {
 		OutputDirectoryLogging.catchLogEntries();
 		
-		// dvrp, drt and taxiFare config groups
+		// dvrp, drt config groups
 		List<ConfigGroup> drtModules = new ArrayList<>();
 		drtModules.add(new DvrpConfigGroup());
 		drtModules.add(new DrtConfigGroup());
-		// TODO: Add drt-specific fare module
+		// TODO: Add drt-specific fare config group
 		
 		List<ConfigGroup> modules = new ArrayList<>();		
 		for (ConfigGroup module : drtModules) {
