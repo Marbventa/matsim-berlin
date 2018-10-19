@@ -146,6 +146,8 @@ public class RunBerlinScenario {
 //		config.plansCalcRoute().setRoutingRandomness( 3. );
 		// FIXME yyyyyy for next version.  ihab/kai, aug'18
 		
+		config.qsim().setInsertingWaitingVehiclesBeforeDrivingVehicles( true );
+		
 		// vsp defaults
 		config.plansCalcRoute().setInsertingAccessEgressWalk( true );
 		config.qsim().setUsingTravelTimeCheckInTeleportation( true );
