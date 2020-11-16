@@ -100,7 +100,7 @@ For a more in-depth guide to installing LinTim please consult the [LinTim Docume
 
 ## 2. Clarification of most important Java classes
 
-The following will clarify the most important Java classes for the interface RunLinTimVehicleCirculation. The package org.matsim.run.linTimVehicleCirculation was written as part of my Master Thesis. The methods of each class will be presented and design choices will be explained. Input for each function will be in italics. Some background information to LinTim will also be given. These classes will be explained in more detail:
+The following will clarify the most important Java classes for the interface RunLinTimVehicleCirculation. The package org.matsim.run.linTimVehicleCirculation was written as part of my Master Thesis. The methods of each class will be presented and design choices will be explained. Input for each function is displayed in italics. Some background information to LinTim will also be given. These classes will be explained in more detail:
 
 <details>
 <summary><b>ExportObjects.java</b></summary>
@@ -139,7 +139,7 @@ The functions are:<br>
 <br>
 Functions are:<br>
 <ul>
-<li>ultimateNode() returns a stop for LinTim. This stop has the maximum value of integers as ID.</li>
+<li>ultimateNode() returns a stop for LinTim. This stop has the maximum value of Integers as ID.</li>
 <li>getStopId() returns the ID for a LinTim stop.</li>
 </details>
 
@@ -225,7 +225,7 @@ The functions are:<br>
 <i>mode</i> is a String that is used for creating VehicleID tags.<br>
 <i>matsimConversionExportDir</i>is the path to the conversion tables. It is expected, that the Vehicle Scheduling output directory is located on the same hierarchy as this path.<br>
 <br>
-<p align="justify">This method reads the output from LinTim's Vehicle Scheduling. Columns 2 and 13 relevant, column 2 indicates which vehicle serves the MATSim Departure, column 13 is the equivalent of MATSim VehicleID represented by a substitute integer.</p>
+<p align="justify">This method reads the output from LinTim's Vehicle Scheduling. Columns 2 and 13 are relevant, column 2 indicates which vehicle serves the MATSim Departure, column 13 is the equivalent of MATSim VehicleID represented by a substitute Integer.</p>
 </details>
 
 <details>
@@ -253,7 +253,7 @@ The functions are:<br>
 <i>fileName</i> is the name of the Vehicle Scheduling output file.<br>
 <i>matsimConversionExportDir</i> is the path to the conversion tables. It is expected, that the Vehicle Scheduling output directory is located on the same hierarchy as this path.<br>
 <br>
-<p align = "justify"> Reads the conversion map of MATSim VehicleID to their replacing Integers. Returns a Map that has the replacing Integers as keys.</p>
+<p align = "justify"> Reads the conversion map of MATSim VehicleID to their replacing Integers in LinTim. Returns a Map that has the replacing Integers as keys, the MATSim VehicleIDs as their values.</p>
 </details>
 </details>
 
@@ -269,13 +269,13 @@ The functions are:<br>
 <br>
 <i>transitSchedule</i> is a MATSim TransitSchedule.<br>
 <i>network</i> is a MATSim Network.<br>
-<i>conversionMapOfStopIds</i> is a map which contains the coordinates of every TransitRouteStop in a network and an integer representing these coordinates.<br>
+<i>conversionMapOfStopIds</i> is a map which contains the coordinates of every TransitRouteStop in a network and an Integer representing these coordinates.<br>
 <i>isMetropolitianArea</i> is a Boolean set to true, if the network should be split into different transit-modes.<br>
 <i>predefinedFilter</i> should be set to "mode", if "isMetropolitianArea = true". <br>
 <i>limitToGrossraumBerlin</i> is a Boolean set to true, if buses should be split into running inside and running outside of Berlin.<br>
-<i>filterObject</i> is the transport-mode which the network is filtered by.<br>
+<i>filterObject</i> is the transport mode which the network is filtered by.<br>
 <br>
-<p align="justify">Firstly filters the network and transitSchedule (see SelectRoutesForLinTim.filterByModeAndId()). The remaining TransitRouteStops are then transformed into LinTim stops, the ID correlates to the coordinates of the TransitRouteStop, also adding a fictional stop, the ultimateNode. This ultimate node is needed to ensure LinTim works, since the dijkstra from LinTim requires a single network. The Berlin Scenario does not have a single network for every transport-mode, for example the U55 is not officially connected to any other TransitLine.</p>
+<p align="justify">Firstly filters the network and transitSchedule (see SelectRoutesForLinTim.filterByModeAndId()). The remaining TransitRouteStops are then transformed into LinTim stops, the ID correlates to the coordinates of the TransitRouteStop, also adding a fictional stop, the ultimateNode. This ultimate node is needed to ensure LinTim works, since the dijkstra from LinTim requires a single network. The Berlin Scenario does not have a single network for every transport mode, for example the U55 is not officially connected to any other TransitLine. Hence exporting only the TransitRouteStops and their links would result in multiple networks.</p>
 </details>
 
 <details>
@@ -286,9 +286,9 @@ The functions are:<br>
 <i>isMetropolitianArea</i> is a Boolean set to true, if the network should be split into different transit-modes.<br>
 <i>predefinedFilter</i> should be set to "mode", if "isMetropolitianArea = true". <br>
 <i>limitToGrossraumBerlin</i> is a Boolean set to true, if buses should be split into running inside and running outside of Berlin.<br>
-<i>filterObject</i> is the transport-mode which the network is filtered by.<br>
+<i>filterObject</i> is the transport mode which the network is filtered by.<br>
 <br>
-<p align="justify">Will create a map of TransitRouteStop coordinates and an integer that substitutes these coordinates. Stops with the same coordinates will have the same corresponding integer.</p>
+<p align="justify">Will create a map of TransitRouteStop coordinates and an Integer that substitutes these coordinates. Stops with the same coordinates will have the same corresponding Integer.</p>
 
 <details>
 <summary>Design Choice</summary>
@@ -299,7 +299,7 @@ The functions are:<br>
 <details>
 <summary>writeStopsToCSV2()</summary>
 <br>
-<i>conversionMapOfStopIds</i> is a map which contains the coordinates of every TransitRouteStop in a network and an integer.<br>
+<i>conversionMapOfStopIds</i> is a map which contains the coordinates of every TransitRouteStop in a network and an Integer.<br>
 <i>matsimConversionExportDir</i> is the path to the conversion directory.<br>
 <br>
 <p align="justify">This function will create a csv2 document of the mapping from coordinates to LinTim stop IDs.</p>
@@ -320,15 +320,15 @@ The functions are:<br>
 <i>isMetropolitianArea</i> is a Boolean set to true, if the network should be split into different transit-modes.<br>
 <i>predefinedFilter</i> is a String giving information about how the TransitRoutes should be filtered. Expected is "mode", currently no alternative is implemented.<br>
 <i>limitToGrossraumBerlin</i>is a Boolean set to true, if buses should be split into running inside and running outside of Berlin.<br>
-<i>filterObject</i> defines the transport-mode which should be exported.<br>
+<i>filterObject</i> defines the transport mode which should be exported.<br>
 <i>matsimConversionExportDir</i> is the path to the conversion directory.<br>
 <br>
-<p align="justify">This function is called by RunLinTimVehicleCirculation.main(). It is used to export all necessary files for LinTim's Vehicle Scheduling. For this process two Maps are created: firstly mapping VehicleIDs to a LinTim line ID, secondly creating a Map for Coordinates of each TransitRouteStops and an equivalent LinTim stop ID. Afterwards methods to create is required file are called. </p>
+<p align="justify">This function is called by RunLinTimVehicleCirculation.main(). It is used to export all necessary files for LinTim's Vehicle Scheduling. For this process two Maps are created: firstly mapping VehicleIDs to a LinTim line ID, secondly creating a Map for Coordinates of each TransitRouteStops and an equivalent LinTim stop ID. Afterwards methods to create the required files are called. </p>
 
 <details>
 <summary>Design Choice</summary>
 <p align = "justify">Creating these two maps helps with the conversion process. Converting the MATSim Vehicles into LinTim lines helps with creating vehicle workings when importing. More importantly it is not possible as simple to create the same TransitLine from MATSim as a LinTim line, since the travel duration along the links, waiting times at stops as well as the length of the line varies strongly in MATSim TransitRoutes. This issue would need to be addressed when creating LinTim lines. </p>
-<p align="justify">Creating a mapping onto the coordinates instead of the TransitRouteStop itself helps since some TransitRouteStops in MATSim have different IDs but yet the same coordinate, do to the GTFS2MATSim conversion. When using the TransitRouteStop coordinates it circumvents some of these issues.</p>
+<p align="justify">Creating a mapping onto the coordinates instead of the actual TransitRouteStop helps since some TransitRouteStops in MATSim have different IDs but yet the same coordinate, due to the GTFS2MATSim conversion. When using the TransitRouteStop coordinates it circumvents some of these issues.</p>
 </details>
 </details>
 
@@ -337,12 +337,12 @@ The functions are:<br>
 <br>
 <i>transitSchedule</i> is a MATSim TransitSchedule.<br>
 <i>network</i> is a MATSim Network.<br>
-<i>conversionMapVecIdToLinTimLineId</i> contains a mapping of MATSim VehicleIDs with their corresponding integer of LinTim line ID.<br>
-<i>conversionMapOfStop</i> is a map which contains the coordinates of every TransitRouteStop in a network and an integer representing these coordinates.<br>
+<i>conversionMapVecIdToLinTimLineId</i> contains a mapping of MATSim VehicleIDs with their corresponding Integer of LinTim line ID.<br>
+<i>conversionMapOfStop</i> is a map which contains the coordinates of every TransitRouteStop in a network and an Integer representing these coordinates.<br>
 <i>isMetropolitianArea</i> is a Boolean set to true, if the network should be split into different transit-modes.<br>
 <i>predefinedFilter</i> is a String giving information about how the TransitRoutes should be filtered. Expected is "mode", currently no alternative is implemented.<br>
 <i>limitToGrossraumBerlin</i>is a Boolean set to true, if buses should be split into running inside and running outside of Berlin.<br>
-<i>filterObject</i> defines the transport-mode which should be exported.<br>
+<i>filterObject</i> defines the transport mode which should be exported.<br>
 <i>matsimConversionExportDir</i> is the path to the conversion directory.<br>
 <br>
 <p align="justify">The function iterates through selected TransitRoutes and creates a LinTimTripEntry for every Departure in each TransitRoute. The following factors are set to -1, since they are not evaluated in Vehicle Scheduling: startId, periodicStartId, endId, periodicEndId. Trips in LinTim describe the drive of a vehicle from one stop to another. An exported trip entry connects thus the first TransitRouteStop of a TransitRoute with the last TransitRouteStop of a TransitRoute. As such the startTime and endTime are equivalent to the DepartureTime and the arrival time at the TransitRouteStops. The equivalent for the MATSim VehicleID is the LinTim line. The map is then exported as a file.</p>
@@ -353,11 +353,11 @@ The functions are:<br>
 <br>
 <i>transitSchedule</i> is a MATSim TransitSchedule.<br>
 <i>network</i> is a MATSim Network.<br>
-<i>conversionMapOfStop</i> is a map which contains the coordinates of every TransitRouteStop in a network and an integer representing these coordinates.<br>
+<i>conversionMapOfStop</i> is a map which contains the coordinates of every TransitRouteStop in a network and an Integer representing these coordinates.<br>
 <i>isMetropolitianArea</i> is a Boolean set to true, if the network should be split into different transit-modes.<br>
 <i>predefinedFilter</i> is a String giving information about how the TransitRoutes should be filtered. Expected is "mode", currently no alternative is implemented.<br>
 <i>limitToGrossraumBerlin</i>is a Boolean set to true, if buses should be split into running inside and running outside of Berlin.<br>
-<i>filterObject</i> defines the transport-mode which should be exported.<br>
+<i>filterObject</i> defines the transport mode which should be exported.<br>
 <i>matsimConversionExportDir</i> is the path to the conversion directory.<br>
 <br>
 <p align="justify">This function firstly calls MapToLintimStops.mapTrsToLintimStop() and creates a Map of every LinTimStop. The stop attributes are then combined to a single String in a List. This List is then created as a file.</p>
@@ -368,18 +368,18 @@ The functions are:<br>
 <br>
 <i>transitSchedule</i> is a MATSim TransitSchedule.<br>
 <i>network</i> is a MATSim Network.<br>
-<i>conversionMapVecIdToLinTimLineId</i> contains a mapping of MATSim VehicleIDs with their corresponding integer of LinTim line ID.<br>
-<i>conversionMapOfStop</i> is a map which contains the coordinates of every TransitRouteStop in a network and an integer representing these coordinates.<br>
+<i>conversionMapVecIdToLinTimLineId</i> contains a mapping of MATSim VehicleIDs with their corresponding Integer of LinTim line ID.<br>
+<i>conversionMapOfStop</i> is a map which contains the coordinates of every TransitRouteStop in a network and an Integer representing these coordinates.<br>
 <i>isMetropolitianArea</i> is a Boolean set to true, if the network should be split into different transit-modes.<br>
 <i>predefinedFilter</i> is a String giving information about how the TransitRoutes should be filtered. Expected is "mode", currently no alternative is implemented.<br>
 <i>limitToGrossraumBerlin</i>is a Boolean set to true, if buses should be split into running inside and running outside of Berlin.<br>
-<i>filterObject</i> defines the transport-mode which should be exported.<br>
+<i>filterObject</i> defines the transport mode which should be exported.<br>
 <i>matsimConversionExportDir</i> is the path to the conversion directory.<br>
 <br>
 <p align="justify">This function creates the Edge file for LinTim, the resulting file contains a link in every row. The function iterates through every selected TransitRoute and creates an ordered Map of TransitRoutes by their occupancy in the TransitRoute, first Stop is the first entry of the Map, last Stop the last entry with the key equal to the position in the TransitRoute.</p>
-<p align = "justify">After the function iterates through this newly created Map, skipping the first entry. The LinTimEdge consists of an ID, which is increased after each new entry in the  Map of every LinTim Edge. The from stop is the entry integer from the Coordinates corresponding to the TransitRouteStop of the previous map entry of all ordered TransitRouteStops, the toStop is the  equivalent of the currentTransitRouteStop. Headway is always set to 5, since it is the default in LinTim. Both bounds are equal, they are determined by the arrival - departure offset from the corresponding TransitRouteStops. </p>
+<p align = "justify">After the function iterates through this newly created Map, skipping the first entry. The LinTimEdge consists of an ID, which is increased after each new entry in the  Map of every LinTim Edge. The from stop is the entry Integer from the Coordinates corresponding to the TransitRouteStop of the previous map entry of all ordered TransitRouteStops, the toStop is the  equivalent of the currentTransitRouteStop. Headway is always set to 5, since it is the default in LinTim. Both bounds are equal, they are determined by the arrival - departure offset from the corresponding TransitRouteStops. </p>
 <p align="justify">If the combination of the fromStop and toStop are not yet contained in the key set of Map of all LinTim edges, a new entry is added. If however the entry already exists, it is replaced, if the bound is bigger then the previous bound.</p>
-<p align="justify">To the already created edges another Map of edges is added, which ensure the usability of the created network. These edges combine every LinTim stop with a node, even if the travel-duration is the maximum value of integers. Otherwise, it is not ensured, that a every node may be able to be reached from any other node.</p>
+<p align="justify">To the already created edges another Map of edges is added, which ensure the usability of the created network. These edges combine every LinTim stop with a node, even if the travel-duration is the maximum value of Integers. Otherwise, it is not ensured, that a every node may be able to be reached from any other node.</p>
 <p align="justify">The resulting Map is then used to create a List which is turned into the Edge file.</p>
 <details>
 <summary>Design Choice</summary>
@@ -419,9 +419,9 @@ MatsimImportFromLinTim is the class containing functions to import the output fr
 <i>isMetropolitianArea</i> is a Boolean set to true, if the network should be split into different transit-modes.<br>
 <i>predefinedFilter</i> is a String giving information about how the TransitRoutes should be filtered. Expected is "mode", currently no alternative is implemented.<br>
 <i>limitToGrossraumBerlin</i>is a Boolean set to true, if buses should be split into running inside and running outside of Berlin.<br>
-<i>filterObject</i> defines the transport-mode which should be exported.<br>
-<i>vehicleWorkingCounter</i> is a wrapper for an integer that is used to reference vehicle IDs.<br>
-<i>ptLinkCounter</i> is a wrapper for an integer that is used to reference link IDs.<br>
+<i>filterObject</i> defines the transport mode which should be exported.<br>
+<i>vehicleWorkingCounter</i> is a wrapper for an Integer that is used to reference vehicle IDs.<br>
+<i>ptLinkCounter</i> is a wrapper for an Integer that is used to reference link IDs.<br>
 <i>matsimConversionDir</i> is the path to the conversion directory.<br>
 <br>
 <p align="justify">This function creates Maps by calling functions, they are partly for conversion and reading the output from LinTim.<p>
@@ -432,13 +432,13 @@ MatsimImportFromLinTim is the class containing functions to import the output fr
 <summary>returnVehicleCirculationLinTimConfig()</summary> 
 <br>
 <i>scenarioManipulated</i> is a MATSim Scenario. The TransitVehicles in it will be replaced with ones which serve more then a single departure.<br>
-<i>conversionVecIdToLines</i> contains a mapping of MATSim VehicleIDs with their corresponding integer of LinTim line ID.<br>
+<i>conversionVecIdToLines</i> contains a mapping of MATSim VehicleIDs with their corresponding Integer of LinTim line ID.<br>
 <i>outputConversionLineToMATSimVehicle</i> is a mapping of LinTim's line IDs and which MATSim Vehicles they represent.<br>
-<i>umlaufVecIdsWithRoutes</i> is a Map with LinTim's line IDs as keys. Their values are a list of integers, positives represent MATSim VehicleIDs in the sequence in which they need to be served by the LinTim vehicle.<br>
+<i>umlaufVecIdsWithRoutes</i> is a Map with LinTim's line IDs as keys. Their values are a list of Integers, positives represent MATSim VehicleIDs in the sequence in which they need to be served by the LinTim vehicle.<br>
 <i>isMetropolitianArea</i> is a Boolean set to true, if the network should be split into different transit-modes.<br>
 <i>predefinedFilter</i> is a String giving information about how the TransitRoutes should be filtered. Expected is "mode", currently no alternative is implemented.<br>
 <i>limitToGrossraumBerlin</i>is a Boolean set to true, if buses should be split into running inside and running outside of Berlin.<br>
-<i>filterObject</i> defines the transport-mode which should be exported.<br>
+<i>filterObject</i> defines the transport mode which should be exported.<br>
 <i>matsimConversionExportDir</i> is the path to the conversion directory.<br>
 <br>
 <p align="justify">Iterates over every selected TransitRoute and each Departure. The function will replace the relevant MATSim VehicleIDs with their new vehicle circulation vehicles as well as add them to TransitVehicles. The function calls addConnectingLinksToNetwork().</p>
@@ -448,9 +448,9 @@ MatsimImportFromLinTim is the class containing functions to import the output fr
 <summary>addConnectingLinksToNetwork()</summary>
 <br>
 <i>scenario</i> a MATSim Scenario.<br>
-<i>umlaufVecIdsWithRoutes</i> is a Map with LinTim's line IDs as keys. Their values are a list of integers, positives represent MATSim VehicleIDs in the sequence in which they need to be served by the LinTim vehicle.<br>
+<i>umlaufVecIdsWithRoutes</i> is a Map with LinTim's line IDs as keys. Their values are a list of Integers, positives represent MATSim VehicleIDs in the sequence in which they need to be served by the LinTim vehicle.<br>
 <i>conversionLineToMATSimVehicle</i> is a mapping of LinTim's line IDs and which MATSim Vehicles they represent.<br>
-<i>ptLinkCounter</i>  is a wrapper for an integer that is used to reference link IDs.<br>
+<i>ptLinkCounter</i>  is a wrapper for an Integer that is used to reference link IDs.<br>
 <br>
 <p align="justify">This function adds links to the MATSim network. Each trip of a LinTim vehicle is empty the function will add a link from the end TransitRouteStop of the last served TransitRoute to the following starting TransitRouteStop of the new TransitRoute.</p>
 </details>
@@ -479,7 +479,7 @@ MatsimImportFromLinTim is the class containing functions to import the output fr
 <br>
 <i>scenario</i> is a MATSim Scenario.<br>
 <br>
-<p align="justify">Some links in the current Berlin Scenario have length 0. Usually this is not an issue, but public transport considers these in their Dijkstra operation. These links seem to cause a loop, which results in a non-ending "creating vehicle umlaeufe" during MATSim.</p>
+<p align="justify">Some links in the current Berlin Scenario have length 0. Usually this is not an issue, but public transport considers these in their Dijkstra operation. These links seem to cause a loop, which results in a non-ending "Generating UmlaufStuecke" during MATSim.</p>
 </details>
 
 <details>
@@ -524,14 +524,14 @@ MatsimImportFromLinTim is the class containing functions to import the output fr
 <i>isMetropolitianArea</i> is a Boolean set to true, if the network should be split into different transit-modes.<br>
 <i>predefinedFilter</i> is a String giving information about how the TransitRoutes should be filtered. Expected is "mode", currently no alternative is implemented.<br>
 <i>limitToGrossraumBerlin</i>is a Boolean set to true, if buses should be split into running inside and running outside of Berlin.<br>
-<i>filterObject</i> defines the transport-mode which should be exported.<br>
+<i>filterObject</i> defines the transport mode which should be exported.<br>
 <br>
-<p align="justify">During the process of creating LinTim's Vehicle Scheduling the TransitSchedule is split into different sections and processed separately. the filterObject defines which TransitRoutes are supposed to be selected. This is the function that filters these modes. The three main transport-modes rail, tram and bus are supported. The mode rail and bus are split into two or more categories. For more information on rail read the function <i>idIndicatesWhichRailToFilter</i>.</p>
-</p align="justify">Buses in the process of creating LinTim's Vehicle Scheduling are split into two parties: TransitRoutes with mode bus that have all of their TransitRouteStops inside of Berlin, and then the other TransitRoutes. </p>
+<p align="justify">During the process of creating LinTim's Vehicle Scheduling the TransitSchedule is split into different sections and processed separately. The filterObject defines which TransitRoutes are supposed to be selected. This is the function that filters these modes. The three main transport modes rail, tram and bus are supported. The mode rail and bus are split into two or more categories. For more information on rail read the function <i>idIndicatesWhichRailToFilter()</i>.</p>
+</p align="justify">Buses in the process of creating LinTim's Vehicle Scheduling are split into two parties: TransitRoutes with mode bus that have all of their TransitRouteStops inside of Berlin, and then the rest of the TransitRoutes. </p>
 <br>
 <details>
 <summary>Design Choice</summary>
-<p align="justify">Separating bus TransitRoutes into two sections was not fully voluntary. Processing all of Berlin Scenario took about 20 hours. Splitting the bus TransitRoutes reduced the time by about 4 hours, also it seemed to make sense from a transport engineering standpoint, that bus providers would not usually serve both inside of Berlin and outside.</p>
+<p align="justify">Separating bus TransitRoutes into two sections was not completely voluntary. Processing all of the Berlin Scenario took about 20 hours. Splitting the bus TransitRoutes reduced the time by about 4 hours, also it seemed to make sense from a transport engineering standpoint, that bus providers would not usually serve lines both inside of Berlin and outside.</p>
 </details>
 </details>
 
@@ -567,7 +567,7 @@ MatsimImportFromLinTim is the class containing functions to import the output fr
 <p align="justify">This function returns a distance of 30 km as a Square. For this two points of interest were used: Berlin Brandenburger Tor and Kaserne Gatow. Google Maps says that the points are about 30 km apart. The square of the difference is returned, since it is compared against the difference in coordinates from another TransitRouteStop using Pythagoras.</p>
 <details>
 <summary>Design Choice</summary>
-<p align="justify">30 km was chosen, because [Hans Heuer](https://link.springer.com/chapter/10.1007%2F978-3-663-05165-7_1) defines Berlin with a 60 km diameter.</p>
+<p align="justify">30 km was chosen, because <a href="https://link.springer.com/chapter/10.1007%2F978-3-663-05165-7_1">Hans Heuer</a> defines Berlin with a 60 km diameter.</p>
 </details>
 </details>
 </details>
@@ -639,9 +639,9 @@ MatsimImportFromLinTim is the class containing functions to import the output fr
 <i>isMetropolitianArea</i> is a Boolean set to true, if the network should be split into different transit-modes.<br>
 <i>predefinedFilter</i> is a String giving information about how the TransitRoutes should be filtered. Expected is "mode", currently no alternative is implemented.<br>
 <i>limitToGrossraumBerlin</i>is a Boolean set to true, if buses should be split into running inside and running outside of Berlin.<br>
-<i>filterObject</i> defines the transport-mode which should be exported.<br>
+<i>filterObject</i> defines the transport mode which should be exported.<br>
 <br>
-<p align="justify">This function assigns every selected TransitRoute an Integer. The integer represents the ID of a LinTim line.</p>
+<p align="justify">This function assigns every selected TransitRoute an Integer. The Integer represents the ID of a LinTim line.</p>
 </details>
 
 <details>
